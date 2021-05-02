@@ -64,8 +64,9 @@ const CreationScreen = ({ navigation }) => {
           >
             <Text
               style={{
+                fontFamily: "BasisGrotesquePro_Bold",
                 fontSize: 20,
-                fontWeight: "bold",
+                // fontWeight: "bold",
                 color: "#3A62BF",
                 textAlign: "center",
                 marginBottom: 24,
@@ -74,7 +75,14 @@ const CreationScreen = ({ navigation }) => {
               Let's set up your planner for this term
             </Text>
           </View>
-          <Text style={{ fontSize: 18, textAlign: "center", marginBottom: 34 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              textAlign: "center",
+              marginBottom: 34,
+              fontFamily: "BasisGrotesquePro",
+            }}
+          >
             Enter your courses
           </Text>
           {/* Add Course Section */}
@@ -97,7 +105,11 @@ const CreationScreen = ({ navigation }) => {
                   value={course1}
                   textAlign="center"
                   placeholderTextColor="rgba(79,116,208,0.5)"
-                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  inputStyle={{
+                    color: "rgb(79,116,208)",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
+                  }}
                   containerStyle={{
                     height: 44,
                     width: windowWidth * 0.6,
@@ -114,7 +126,11 @@ const CreationScreen = ({ navigation }) => {
                   value={course2}
                   textAlign="center"
                   placeholderTextColor="rgba(79,116,208,0.5)"
-                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  inputStyle={{
+                    color: "rgb(79,116,208)",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
+                  }}
                   containerStyle={{
                     height: 44,
                     width: windowWidth * 0.6,
@@ -131,7 +147,11 @@ const CreationScreen = ({ navigation }) => {
                   value={course3}
                   textAlign="center"
                   placeholderTextColor="rgba(79,116,208,0.5)"
-                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  inputStyle={{
+                    color: "rgb(79,116,208)",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
+                  }}
                   containerStyle={{
                     height: 44,
                     width: windowWidth * 0.6,
@@ -150,8 +170,9 @@ const CreationScreen = ({ navigation }) => {
                     textAlign="center"
                     placeholderTextColor="rgba(79,116,208,0.5)"
                     inputStyle={{
+                      fontFamily: "BasisGrotesquePro_Bold",
                       color: "rgb(79,116,208)",
-                      fontWeight: "bold",
+                      // fontWeight: "bold",
                     }}
                     containerStyle={{
                       height: 44,
@@ -173,7 +194,8 @@ const CreationScreen = ({ navigation }) => {
                     placeholderTextColor="rgba(79,116,208,0.5)"
                     inputStyle={{
                       color: "rgb(79,116,208)",
-                      fontWeight: "bold",
+                      // fontWeight: "bold",
+                      fontFamily: "BasisGrotesquePro_Bold",
                     }}
                     containerStyle={{
                       height: 44,
@@ -236,7 +258,7 @@ const CreationScreen = ({ navigation }) => {
               marginTop: windowHeight * 0.1,
             }}
             title="Done"
-            titleStyle={{ fontWeight: "bold" }}
+            titleStyle={{ fontFamily: "BasisGrotesquePro_Bold" }}
           />
         </SafeAreaView>
       </ScrollView>

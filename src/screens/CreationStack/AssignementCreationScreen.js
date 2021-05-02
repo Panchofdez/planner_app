@@ -91,7 +91,8 @@ const AssignementCreationScreen = ({ navigation, route }) => {
             style={{
               fontSize: 20,
               color: "#3A62BF",
-              fontWeight: "bold",
+              // fontWeight: "bold",
+              fontFamily: "BasisGrotesquePro_Bold",
               marginBottom: 10,
             }}
           >
@@ -105,7 +106,8 @@ const AssignementCreationScreen = ({ navigation, route }) => {
         <Text
           style={{
             fontSize: 18,
-            fontWeight: "bold",
+            // fontWeight: "bold",
+            fontFamily: "BasisGrotesquePro_Bold",
             color: "#3A62BF",
             alignSelf: "flex-start",
             marginLeft: 20,
@@ -130,10 +132,11 @@ const AssignementCreationScreen = ({ navigation, route }) => {
         <Text
           style={{
             fontSize: 18,
-            fontWeight: "bold",
+            // fontWeight: "bold",
             color: "#3A62BF",
             alignSelf: "flex-start",
             marginLeft: 20,
+            fontFamily: "BasisGrotesquePro_Bold",
           }}
         >
           Exams/Quizzes

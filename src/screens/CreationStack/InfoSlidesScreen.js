@@ -58,7 +58,14 @@ const InfoSlidesScreen = ({ navigation }) => {
             flexDirection: "row",
           }}
         >
-          <Text style={{ fontSize: 22, marginBottom: 100, color: "black" }}>
+          <Text
+            style={{
+              fontSize: 22,
+              marginBottom: 100,
+              color: "black",
+              fontFamily: "BasisGrotesquePro",
+            }}
+          >
             {item.title}
           </Text>
           <Text
@@ -69,12 +76,21 @@ const InfoSlidesScreen = ({ navigation }) => {
               fontSize: 40,
               marginBottom: 100,
               color: "#4C74D0",
-              fontWeight: "bold",
+              // fontWeight: "bold",
+              fontFamily: "BasisGrotesquePro_Bold",
             }}
           >
             {item.highlighted}
           </Text>
-          <Text style={{ fontSize: 22, marginBottom: 100 }}>{item.title2}</Text>
+          <Text
+            style={{
+              fontSize: 22,
+              marginBottom: 100,
+              fontFamily: "BasisGrotesquePro",
+            }}
+          >
+            {item.title2}
+          </Text>
         </View>
 
         {/* <Image source={item.source} style={item.styling} /> */}

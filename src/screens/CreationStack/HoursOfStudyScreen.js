@@ -15,11 +15,12 @@ import { loadHours } from "../../store/actions/main";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-LogBox.ignoreAllLogs();
-
 const HoursOfStudyScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
+  LogBox.ignoreLogs(["Expected style "]);
+  const { assignments } = route.params;
+  console.log(assignments);
   const [hours, setHours] = useState(0);
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -31,7 +32,8 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
         <Text
           style={{
             color: "#3A62BF",
-            fontWeight: "bold",
+            // fontWeight: "bold",
+            fontFamily: "BasisGrotesquePro_Bold",
             fontSize: 20,
             textAlign: "center",
           }}
@@ -48,6 +50,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
           style={{
             fontSize: 20,
             textAlign: "center",
+            fontFamily: "BasisGrotesquePro",
             marginBottom: 20,
           }}
         >
@@ -78,6 +81,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
       <Text
         style={{
           fontSize: 20,
+          fontFamily: "BasisGrotesquePro",
           textAlign: "center",
         }}
       >
@@ -96,7 +100,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
           backgroundColor: "#3A62BF",
         }}
         title="Finish"
-        titleStyle={{ fontWeight: "bold" }}
+        titleStyle={{ fontFamily: "BasisGrotesquePro_Bold" }}
       />
     </SafeAreaView>
   );
