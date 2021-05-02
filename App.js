@@ -32,22 +32,21 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="InfoSlides"
           component={InfoSlidesScreen}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="CourseSelection"
           component={CourseSelectionScreen}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="AssignementCreation"
           component={AssignementCreationScreen}
         /> */}
-
         {/* <Stack.Screen
         options={{ headerShown: false }}
         name="HoursOfStudy"
@@ -58,11 +57,11 @@ const MainNavigator = () => {
           name="Calendar"
           component={CalendarScreen}
         /> */}
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Dashboard"
           component={DashboardScreen}
-        /> */}
+        />
         {/* <Stack.Screen
           options={{ headerShown: false }}
           name="Home"

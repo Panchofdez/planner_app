@@ -18,7 +18,7 @@ import { Button } from "react-native-elements";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const InfoSlidesScreen = () => {
+const InfoSlidesScreen = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const carouselItems = [
@@ -111,6 +111,9 @@ const InfoSlidesScreen = () => {
           borderRadius: 50,
           backgroundColor: "#4C74D0",
           borderRadius: 25,
+        }}
+        onPress={() => {
+          navigation.push("CourseSelection");
         }}
         title="Continue"
         titleStyle={{ fontWeight: "bold" }}

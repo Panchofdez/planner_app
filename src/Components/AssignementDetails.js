@@ -4,6 +4,16 @@ import { Input, Button } from "react-native-elements";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { diff } from "react-native-reanimated";
 import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+// Icons
+import Happy from "../Images/happy";
+import Normal from "../Images/normal";
+import Sad from "../Images/sad";
+import PlusSign from "../Images/plusSign.svg";
+import HappySelected from "../Images/happySelected";
+import NormalSelected from "../Images/normalSelected";
+import SadSelected from "../Images/sadSelected";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -15,6 +25,12 @@ const AssignementDetails = ({ addAssignment, type }) => {
   const [difficulty, setDifficulty] = useState("");
   const [showButton, setShowButton] = useState(true);
   const [isEditable, setIsEditable] = useState(true);
+
+  // difficulty states
+  const [sad, setSad] = useState(false);
+  const [normal, setNormal] = useState(false);
+  const [happy, setHappy] = useState(false);
+
   return (
     <>
       <View
@@ -22,6 +38,8 @@ const AssignementDetails = ({ addAssignment, type }) => {
           backgroundColor: "white",
           width: windowWidth * 0.9,
           borderRadius: 10,
+          height: 176,
+          borderRadius: 22,
           marginTop: 20,
         }}
       >
@@ -41,7 +59,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
               alignItems: "center",
               justifyContent: "center",
               marginRight: 10,
-              height: 100,
+              height: 73,
               borderRadius: 8,
               backgroundColor: "#F0F0F0",
             }}
@@ -50,7 +68,17 @@ const AssignementDetails = ({ addAssignment, type }) => {
               editable={isEditable}
               value={description}
               onChangeText={setDescription}
-              placeholder="Description"
+              placeholder="Name"
+              textAlign="center"
+              placeholderTextColor="rgba(79,116,208,0.5)"
+              inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+              containerStyle={{
+                height: 44,
+                marginTop: 30,
+                borderRadius: 25,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
               inputContainerStyle={{ borderColor: "transparent" }}
             />
           </View>
@@ -71,7 +99,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 justifyContent: "center",
                 marginBottom: 5,
                 borderRadius: 8,
-                height: 45,
+                height: 33,
                 backgroundColor: "#F0F0F0",
               }}
             >
@@ -80,8 +108,19 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 value={dueDate}
                 onChangeText={setDueDate}
                 placeholder="Due Date"
+                textAlign="center"
+                placeholderTextColor="rgba(79,116,208,0.5)"
+                inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                containerStyle={{
+                  height: 44,
+                  borderRadius: 25,
+                  marginTop: 25,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
                 inputContainerStyle={{
                   borderColor: "transparent",
+                  justifyContent: "center",
                 }}
               />
             </View>
@@ -92,7 +131,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: 5,
-                height: 45,
+                height: 33,
                 borderRadius: 8,
                 backgroundColor: "#F0F0F0",
                 borderColor: "#F0F0F0",
@@ -104,16 +143,33 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 onChangeText={setWeight}
                 placeholder="Weight %"
                 inputContainerStyle={{ borderColor: "transparent" }}
+                placeholderTextColor="rgba(79,116,208,0.5)"
+                inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                containerStyle={{
+                  height: 44,
+                  borderRadius: 25,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 25,
+                  marginLeft: 30,
+                }}
+                inputContainerStyle={{
+                  borderColor: "transparent",
+                  justifyContent: "center",
+                }}
               />
             </View>
           </View>
         </View>
         <View
           style={{
-            height: 100,
+            marginTop: -6,
             display: "flex",
             padding: 10,
+            height: 85,
             paddingTop: 5,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <View
@@ -126,23 +182,58 @@ const AssignementDetails = ({ addAssignment, type }) => {
               flex: 1,
               borderRadius: 8,
               backgroundColor: "#F0F0F0",
+              width: "100%",
             }}
           >
-            <Input
-              editable={isEditable}
-              // value={difficulty}
-              // onChangeText={setDifficulty}
-              placeholder="Difficulty"
-              inputContainerStyle={{ borderColor: "transparent" }}
-            />
+            <Text
+              style={{
+                color: "rgba(79,116,208,0.5)",
+                fontWeight: "bold",
+                fontSize: 18,
+                marginBottom: 7,
+              }}
+            >
+              Difficulty
+            </Text>
             <View
               style={{
-                display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-around",
-                alignContent: "center",
+                justifyContent: "space-evenly",
+                width: "100%",
+                marginBottom: 7,
               }}
-            ></View>
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setSad(true);
+                  setHappy(false);
+                  setNormal(false);
+                }}
+              >
+                {!sad && <Sad />}
+                {sad && <SadSelected />}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setSad(false);
+                  setHappy(false);
+                  setNormal(true);
+                }}
+              >
+                {!normal && <Normal />}
+                {normal && <NormalSelected />}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setSad(false);
+                  setHappy(true);
+                  setNormal(false);
+                }}
+              >
+                {!happy && <Happy />}
+                {happy && <HappySelected />}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -165,7 +256,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
             setShowButton(false);
             setIsEditable(false);
           }}
-          icon={<FontAwesome name="plus" size={24} color="#3A62BF" />}
+          icon={<PlusSign />}
           buttonStyle={{
             borderRadius: 50,
             backgroundColor: "white",
