@@ -29,12 +29,12 @@ const AssignementCreationScreen = ({ navigation, route }) => {
       ...data,
       course: title,
       finished: false,
-      recommendedHours,
+      hoursDaily: recommendedHours,
       estimatedHours,
       hoursLeft: estimatedHours,
-      type,
     });
-    if (type == "Assignments") {
+    console.log(type);
+    if (type === "Assignment") {
       setNumAssignments(numAssignments + 1);
     } else {
       setNumExams(numExams + 1);
@@ -146,11 +146,12 @@ const AssignementCreationScreen = ({ navigation, route }) => {
           onPress={() => {
             if (idx === courseList.length - 1) {
               navigation.push("HomeScreen", {
-                courseDetails: courseList,
+                assignments,
               });
             } else {
               console.log("INDEX", idx);
               navigation.push("AssignementCreation", {
+                assignments,
                 courseList,
                 idx: idx + 1,
               });

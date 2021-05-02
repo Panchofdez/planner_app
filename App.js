@@ -10,26 +10,20 @@ import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
 
 const Stack = createStackNavigator();
 
-const CreationStack = () => {
-  return <Stack.Navigator></Stack.Navigator>;
-};
-
-const HomeStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Home"
-        component={HomeScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Dashboard"
+          component={DashboardScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HomeScreen"
+          component={HomeScreen}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="CourseSelection"
@@ -46,17 +40,6 @@ const MainNavigator = () => {
         name="HoursOfStudy"
         component={HoursOfStudyScreen}
       /> */}
-
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Dashboard"
-          component={DashboardScreen}
-        />
-        {/* <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={HomeStack}
-        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

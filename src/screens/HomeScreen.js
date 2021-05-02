@@ -1,13 +1,57 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
+import { TouchableOpacity } from "react-native";
+import moment from "moment";
+//  Icons
+import CheckMark from "../Images/checkMark.svg";
+import ArrowForward from "../Images/arrowForward.svg";
+import Arrowback from "../Images/arrowBack.svg";
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+//  List of courses
+const courseList = [
+  {
+    name: "CHEM 120",
+    colour: "#EF6565",
+    assignement: "Assignement 3",
+    hoursOfWork: 2,
+  },
+  {
+    name: "PHY 223",
+    colour: "#C662BE",
+    assignement: "Lab 3",
+    hoursOfWork: 2,
+  },
+  {
+    name: "BIO 111",
+    colour: "#6FB75E",
+    assignement: "Quiz 2",
+    hoursOfWork: 1,
+  },
+  {
+    name: "MAT 100",
+    colour: "#939BFF",
+    assignement: "Problem Set 3",
+    hoursOfWork: 1,
+  },
+];
+
+const COLOURS = ["#939BFF", "#6FB75E", "#C662BE", "CHEM 120"];
 let allAssignments = [
   {
     name: "Assignment 1",
     course: "CPS109",
     percentage: 45,
-    totalHours: 20,
+    estimated: 20,
     hoursLeft: 20,
     hoursDaily: 2,
     difficulty: 3,
@@ -17,7 +61,7 @@ let allAssignments = [
     name: "Assignment 2",
     course: "CPS209",
     percentage: 30,
-    totalHours: 10,
+    estimatedHours: 10,
     hoursLeft: 10,
     hoursDaily: 2,
     finished: false,
@@ -27,7 +71,7 @@ let allAssignments = [
     name: "Assignment 3",
     course: "CPS109",
     percentage: 50,
-    totalHours: 15,
+    estimatedHours: 15,
     hoursLeft: 15,
     hoursDaily: 3,
     difficulty: 2,
@@ -37,7 +81,7 @@ let allAssignments = [
     name: "Assignment 4",
     course: "CPS310",
     percentage: 10,
-    totalHours: 15,
+    estimatedHours: 15,
     hoursLeft: 15,
     hoursDaily: 1,
     difficulty: 1,
@@ -45,11 +89,13 @@ let allAssignments = [
   },
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation, route }) => {
   const finishedAssignments = [];
 
+  //   const { assignments } = route.params;
+  //   console.log("ASSIGNMENTS", assignments.length);
   //this will store the latest due date for an assignement
-  const [latestDueDate, setLatestDueDate] = useState(0);
+  //   const [latestDueDate, setLatestDueDate] = useState(0);
   const [currentDay, setCurrentDay] = useState(0);
 
   //All assignments to do
@@ -64,7 +110,20 @@ const HomeScreen = () => {
   //Map that stores all the daily tasks for all the possible days until the latest due date
   const [map, setMap] = useState({});
 
-  const [totalHours, setTotalHours] = useState(5);
+  const [totalHours, setTotalHours] = useState(6);
+
+  // Current Date
+  var currentDate = moment().format("dddd, MMMM Do");
+  var currentD = moment().format("Do");
+  // As user fills checkmarks this will go up
+  const [dailyHoursCompleted, setDailyHoursCompleted] = useState(0);
+  // Total daily hours of work to do
+  const percentComplete = ((dailyHoursCompleted / totalHours) * 100).toFixed(0);
+
+  //  state for date
+  const [date, setDate] = useState(currentDate);
+
+  console.log(`${percentComplete}%`);
 
   useEffect(() => {
     console.log("USE EFFECT");
@@ -94,10 +153,10 @@ const HomeScreen = () => {
       //Assign a priority score to all the ongoing assignments
       for (let i = 0; i < len; i++) {
         if (assignments[i]["finished"] === false) {
-          assignments[i]["hoursDaily"] = getRecommendedHours(
-            assignments[i]["estimatedHours"],
-            assignments[i]["hoursLeft"]
-          );
+          //   assignments[i]["hoursDaily"] = getRecommendedHours(
+          //     assignments[i]["estimatedHours"],
+          //     assignments[i]["hoursLeft"]
+          //   );
           assignments[i]["priorityScore"] = getPriorityScore(
             assignments[i]["percentage"],
             assignments[i]["hoursDaily"]
@@ -151,7 +210,7 @@ const HomeScreen = () => {
   //uses the dynamic programming knapsack algorithm to assign daily tasks based on their priority
   function knapsack(totalWeight, weights, values, len, assignments) {
     let i, w;
-    console.log(totalHours);
+
     //create an 2d matrix to store our values;
     let table = new Array(len + 1);
     for (i = 0; i < table.length; i++) {
@@ -222,57 +281,167 @@ const HomeScreen = () => {
     return Math.round(score);
   };
 
-  //Estimated Hours (the hours it will take to finish assignment)= Difficulty Score*5
-  const getEstimatedHours = (difficultyScore) => {
-    return difficultyScore * 5;
-  };
-  //Hours/Day = Estimated Hours/(Days in advance to work on it)
-  const getRecommendedHours = (estimatedHours, days) => {
-    return;
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 25 }}>{totalHours} hours of studying daily</Text>
-      <Text style={{ fontSize: 25 }}>DAY {currentDay}: </Text>
-
-      <Text style={{ fontSize: 25 }}>Daily Assignments</Text>
-      {dailyAssignments &&
-        dailyAssignments.length > 0 &&
-        dailyAssignments.map((a, i) => (
-          <View key={i} style={{ marginBottom: 20 }}>
-            <Text>
-              {a.name} {a.course}
-            </Text>
-            <Text>Score: {a.priorityScore}</Text>
-            <Text>{a.totalHours} Total hours to finish assignment</Text>
-            <Text>{a.hoursLeft} hours left</Text>
-            <Text>{a.hoursDaily} recommended hours today</Text>
+    <SafeAreaView>
+      {/* Header section */}
+      <View
+        style={{
+          backgroundColor: "#4C74D0",
+          width: windowWidth,
+          height: windowHeight * 0.25,
+          borderBottomRightRadius: 40,
+          borderBottomLeftRadius: 40,
+          shadowColor: "black",
+          paddingTop: windowWidth * 0.1,
+          shadowOffset: {
+            height: 10,
+            width: 0,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 8,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
+          {currentDate}
+        </Text>
+        {/* Hours left to complete */}
+        <View
+          style={{
+            marginTop: 10,
+            width: windowWidth * 0.8,
+            height: 42,
+            borderRadius: 26,
+            backgroundColor: "#CCDDFF",
+            alignItems: "center",
+            justifyContent: percentComplete === 0 ? "center" : "flex-start",
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{
+              height: "100%",
+              borderRadius: 25,
+              marginRight: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              width: `${percentComplete}%`,
+              backgroundColor: "white",
+            }}
+          >
+            {percentComplete >= 50 && (
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "#4C74D0",
+                  fontWeight: "bold",
+                }}
+              >
+                0/6 Hours Completed
+              </Text>
+            )}
           </View>
-        ))}
-
-      <Button
-        onPress={() => {
-          if (currentDay > 0) {
+          {percentComplete < 50 && (
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#4C74D0",
+                fontWeight: "bold",
+              }}
+            >
+              0/{totalHours} Hours Completed
+            </Text>
+          )}
+        </View>
+      </View>
+      {/* Check list */}
+      <View
+        style={{
+          width: windowWidth,
+          alignItems: "center",
+        }}
+      >
+        {dailyAssignments.map((item, i) => {
+          return (
+            <CheckListItem
+              key={item.name}
+              colour={COLOURS[i % 4]}
+              course={item.course}
+              assignement={item.name}
+              hoursOfWork={item.hoursLeft}
+            />
+          );
+        })}
+      </View>
+      {/* Day switching component */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
             setCurrentDay(currentDay - 1);
             setDailyAssignments(map[currentDay - 1]);
-          }
-        }}
-        title="Previous Day"
-        color="#841584"
-      />
-
-      <Button
-        onPress={() => {
-          setCurrentDay(currentDay + 1);
-          setDailyAssignments(map[currentDay + 1]);
-        }}
-        title="Next Day"
-        color="#333"
-      />
-
-      <StatusBar style="auto" />
-    </View>
+          }}
+          style={{
+            borderColor: "#4C74D0",
+            borderWidth: 4,
+            borderRadius: 50,
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Arrowback />
+        </TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: "#4C74D0",
+            borderRadius: 50,
+            height: 80,
+            width: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: 30,
+            marginRight: 30,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 30,
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            {currentDay}
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setCurrentDay(currentDay + 1);
+            setDailyAssignments(map[currentDay + 1]);
+          }}
+          style={{
+            borderRadius: 2,
+            borderColor: "#4C74D0",
+            borderRadius: 50,
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 4,
+          }}
+        >
+          <ArrowForward />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -284,4 +453,123 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 });
+
+const CheckListItem = ({
+  colour,
+  course,
+  assignement,
+  hoursOfWork,
+  stateID,
+}) => {
+  return (
+    <View
+      style={{
+        width: windowWidth,
+        justifyContent: "center",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 20,
+      }}
+    >
+      {/* check box */}
+      <TouchableOpacity
+        onPress={() => {}}
+        style={{
+          height: 50,
+          marginRight: 10,
+          width: 50,
+          borderRadius: 50,
+          backgroundColor: "white",
+          shadowColor: "black",
+          justifyContent: "center",
+          alignItems: "center",
+          shadowOffset: {
+            height: 10,
+            width: 0,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 8,
+        }}
+      >
+        <CheckMark />
+      </TouchableOpacity>
+      {/* item information */}
+      <View
+        style={{
+          backgroundColor: colour,
+          width: 261,
+          height: 66,
+          borderRadius: 30,
+          alignItems: "center",
+          flexDirection: "row",
+          paddingRight: 25,
+          paddingLeft: 25,
+          justifyContent: "space-between",
+          shadowColor: "black",
+          shadowOffset: {
+            height: 10,
+            width: 0,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 8,
+        }}
+      >
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+            {course}
+          </Text>
+          <Text style={{ fontSize: 14, color: "white" }}>{assignement}</Text>
+        </View>
+        <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+          {hoursOfWork}Hr(s)
+        </Text>
+      </View>
+    </View>
+  );
+};
+
 export default HomeScreen;
+
+// <View style={styles.container}>
+// <Text style={{ fontSize: 25 }}>{totalHours} hours of studying daily</Text>
+// <Text style={{ fontSize: 25 }}>DAY {currentDay}: </Text>
+
+// <Text style={{ fontSize: 25 }}>Daily Assignments</Text>
+// {dailyAssignments &&
+//   dailyAssignments.length > 0 &&
+//   dailyAssignments.map((a, i) => (
+//     <View key={i} style={{ marginBottom: 20 }}>
+//       <Text>
+//         {a.name} {a.course}
+//       </Text>
+//       <Text>Score: {a.priorityScore}</Text>
+//       <Text>{a.totalHours} Total hours to finish assignment</Text>
+//       <Text>{a.hoursLeft} hours left</Text>
+//       <Text>{a.hoursDaily} recommended hours today</Text>
+//     </View>
+//   ))}
+
+// <Button
+//   onPress={() => {
+//     if (currentDay > 0) {
+//       setCurrentDay(currentDay - 1);
+//       setDailyAssignments(map[currentDay - 1]);
+//     }
+//   }}
+//   title="Previous Day"
+//   color="#841584"
+// />
+
+// <Button
+//   onPress={() => {
+//     setCurrentDay(currentDay + 1);
+//     setDailyAssignments(map[currentDay + 1]);
+//   }}
+//   title="Next Day"
+//   color="#333"
+// />
+
+// <StatusBar style="auto" />
+// </View>
