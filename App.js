@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import CourseSelectionScreen from "./src/screens/CreationStack/CourseSelectionScreen";
+import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,11 @@ const CreationStack = () => {
         options={{ headerShown: false }}
         name="CourseSelection"
         component={CourseSelectionScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="HoursOfStudy"
+        component={HoursOfStudyScreen}
       />
     </Stack.Navigator>
   );
