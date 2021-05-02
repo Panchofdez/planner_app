@@ -1,12 +1,23 @@
-import React from "react";
-import { View, Text, SafeAreaView, StyleSheet, Dimensions } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  LogBox,
+} from "react-native";
 import ScrollPicker from "react-native-wheel-scroll-picker";
 import { Button } from "react-native-elements";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const HoursOfStudyScreen = () => {
+LogBox.ignoreAllLogs();
+
+const HoursOfStudyScreen = ({ navigation, route }) => {
+  const { assignments } = route.params;
+  const [hours, setHours] = useState(0);
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View
@@ -48,7 +59,7 @@ const HoursOfStudyScreen = () => {
               //
             }}
             onValueChange={(data, selectedIndex) => {
-              //
+              setHours(data);
             }}
             wrapperHeight={180}
             wrapperWidth={150}
@@ -70,6 +81,9 @@ const HoursOfStudyScreen = () => {
         Hours per day
       </Text>
       <Button
+        onPress={() => {
+          navigation.navigate("HomeScreen", { assignments, hours });
+        }}
         buttonStyle={{
           height: 46,
           marginTop: windowHeight * 0.1,

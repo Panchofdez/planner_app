@@ -14,6 +14,7 @@ import moment from "moment";
 import CheckMark from "../Images/checkMark.svg";
 import ArrowForward from "../Images/arrowForward.svg";
 import Arrowback from "../Images/arrowBack.svg";
+import CalendarIcon from "../Images/calendarIcon.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -92,14 +93,14 @@ let allAssignments = [
 const HomeScreen = ({ navigation, route }) => {
   const finishedAssignments = [];
 
-  //   const { assignments } = route.params;
-  //   console.log("ASSIGNMENTS", assignments.length);
+  const { assignments, hours } = route.params;
+  console.log("ASSIGNMENTS", assignments.length);
   //this will store the latest due date for an assignement
   //   const [latestDueDate, setLatestDueDate] = useState(0);
   const [currentDay, setCurrentDay] = useState(0);
 
   //All assignments to do
-  const [assignments1, setAssignments1] = useState(allAssignments);
+  const [assignments1, setAssignments1] = useState();
 
   //Assignments that are finished
   // const [finishedAssignments, setFinishedAssignments] = useState([]);
@@ -110,7 +111,7 @@ const HomeScreen = ({ navigation, route }) => {
   //Map that stores all the daily tasks for all the possible days until the latest due date
   const [map, setMap] = useState({});
 
-  const [totalHours, setTotalHours] = useState(6);
+  const [totalHours, setTotalHours] = useState(hours);
 
   // Current Date
   var currentDate = moment().format("dddd, MMMM Do");
@@ -132,10 +133,10 @@ const HomeScreen = ({ navigation, route }) => {
     if (
       dailyAssignments &&
       dailyAssignments.length === 0 &&
-      assignments1 &&
-      assignments1.length > 0
+      assignments &&
+      assignments.length > 0
     ) {
-      optimizeSchedule(assignments1);
+      optimizeSchedule(assignments);
     }
   }, []);
 
@@ -339,7 +340,7 @@ const HomeScreen = ({ navigation, route }) => {
                   fontWeight: "bold",
                 }}
               >
-                0/6 Hours Completed
+                0/{totalHours} Hours Completed
               </Text>
             )}
           </View>
@@ -370,10 +371,26 @@ const HomeScreen = ({ navigation, route }) => {
               colour={COLOURS[i % 4]}
               course={item.course}
               assignement={item.name}
-              hoursOfWork={item.hoursLeft}
+              hoursOfWork={item.hoursDaily}
+              setDailyHoursCompleted={setDailyHoursCompleted}
+              dailyHoursCompleted={dailyHoursCompleted}
             />
           );
         })}
+      </View>
+      <View
+        style={{
+          width: windowWidth,
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          paddingRight: windowWidth * 0.1,
+          marginTop: windowHeight * 0.1,
+          marginBottom: 20,
+        }}
+      >
+        <TouchableOpacity>
+          <CalendarIcon />
+        </TouchableOpacity>
       </View>
       {/* Day switching component */}
       <View
@@ -385,8 +402,10 @@ const HomeScreen = ({ navigation, route }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            setCurrentDay(currentDay - 1);
-            setDailyAssignments(map[currentDay - 1]);
+            if (currentDay > 0) {
+              setCurrentDay(currentDay - 1);
+              setDailyAssignments(map[currentDay - 1]);
+            }
           }}
           style={{
             borderColor: "#4C74D0",
@@ -424,8 +443,10 @@ const HomeScreen = ({ navigation, route }) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            setCurrentDay(currentDay + 1);
-            setDailyAssignments(map[currentDay + 1]);
+            if (currentDay < Object.keys(map).length - 1) {
+              setCurrentDay(currentDay + 1);
+              setDailyAssignments(map[currentDay + 1]);
+            }
           }}
           style={{
             borderRadius: 2,
@@ -444,23 +465,17 @@ const HomeScreen = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: 50,
-  },
-});
 
 const CheckListItem = ({
   colour,
   course,
   assignement,
   hoursOfWork,
-  stateID,
+  setDailyHoursCompleted,
+  dailyHoursCompleted,
 }) => {
+  const [checked, setChecked] = useState(false);
+
   return (
     <View
       style={{
@@ -473,7 +488,14 @@ const CheckListItem = ({
     >
       {/* check box */}
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => {
+          if (checked) {
+            setDailyHoursCompleted(Math.max(dailyHoursCompleted - hoursOfWork));
+          } else {
+            setDailyHoursCompleted(Math.min(dailyHoursCompleted + hoursOfWork));
+          }
+          setChecked(!checked);
+        }}
         style={{
           height: 50,
           marginRight: 10,
@@ -492,84 +514,45 @@ const CheckListItem = ({
           elevation: 8,
         }}
       >
-        <CheckMark />
+        {checked && <CheckMark />}
       </TouchableOpacity>
+
       {/* item information */}
-      <View
-        style={{
-          backgroundColor: colour,
-          width: 261,
-          height: 66,
-          borderRadius: 30,
-          alignItems: "center",
-          flexDirection: "row",
-          paddingRight: 25,
-          paddingLeft: 25,
-          justifyContent: "space-between",
-          shadowColor: "black",
-          shadowOffset: {
-            height: 10,
-            width: 0,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.5,
-          elevation: 8,
-        }}
-      >
-        <View>
+      <TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: colour,
+            width: 261,
+            height: 66,
+            borderRadius: 30,
+            alignItems: "center",
+            flexDirection: "row",
+            paddingRight: 25,
+            paddingLeft: 25,
+            justifyContent: "space-between",
+            shadowColor: "black",
+            shadowOffset: {
+              height: 10,
+              width: 0,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.5,
+            elevation: 8,
+          }}
+        >
+          <View>
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+              {course}
+            </Text>
+            <Text style={{ fontSize: 14, color: "white" }}>{assignement}</Text>
+          </View>
           <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
-            {course}
+            {hoursOfWork}Hr(s)
           </Text>
-          <Text style={{ fontSize: 14, color: "white" }}>{assignement}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
-          {hoursOfWork}Hr(s)
-        </Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default HomeScreen;
-
-// <View style={styles.container}>
-// <Text style={{ fontSize: 25 }}>{totalHours} hours of studying daily</Text>
-// <Text style={{ fontSize: 25 }}>DAY {currentDay}: </Text>
-
-// <Text style={{ fontSize: 25 }}>Daily Assignments</Text>
-// {dailyAssignments &&
-//   dailyAssignments.length > 0 &&
-//   dailyAssignments.map((a, i) => (
-//     <View key={i} style={{ marginBottom: 20 }}>
-//       <Text>
-//         {a.name} {a.course}
-//       </Text>
-//       <Text>Score: {a.priorityScore}</Text>
-//       <Text>{a.totalHours} Total hours to finish assignment</Text>
-//       <Text>{a.hoursLeft} hours left</Text>
-//       <Text>{a.hoursDaily} recommended hours today</Text>
-//     </View>
-//   ))}
-
-// <Button
-//   onPress={() => {
-//     if (currentDay > 0) {
-//       setCurrentDay(currentDay - 1);
-//       setDailyAssignments(map[currentDay - 1]);
-//     }
-//   }}
-//   title="Previous Day"
-//   color="#841584"
-// />
-
-// <Button
-//   onPress={() => {
-//     setCurrentDay(currentDay + 1);
-//     setDailyAssignments(map[currentDay + 1]);
-//   }}
-//   title="Next Day"
-//   color="#333"
-// />
-
-// <StatusBar style="auto" />
-// </View>
