@@ -2,10 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
-// let assignmentValues = [];
-// let assignmentWeights = [];
-// let totalHours = 50;
-
 let allAssignments = [
   {
     name: "Assignment 1",
@@ -14,6 +10,7 @@ let allAssignments = [
     totalHours: 20,
     hoursLeft: 20,
     hoursDaily: 2,
+    difficulty: 3,
     finished: false,
   },
   {
@@ -24,6 +21,7 @@ let allAssignments = [
     hoursLeft: 10,
     hoursDaily: 2,
     finished: false,
+    difficulty: 4,
   },
   {
     name: "Assignment 3",
@@ -32,6 +30,7 @@ let allAssignments = [
     totalHours: 15,
     hoursLeft: 15,
     hoursDaily: 3,
+    difficulty: 2,
     finished: false,
   },
   {
@@ -41,6 +40,7 @@ let allAssignments = [
     totalHours: 15,
     hoursLeft: 15,
     hoursDaily: 1,
+    difficulty: 1,
     finished: false,
   },
 ];
@@ -49,6 +49,7 @@ let allAssignments = [
 
 const HomeScreen = ({ navigation }) => {
   const finishedAssignments = [];
+
   //this will store the latest due date for an assignement
   const [latestDueDate, setLatestDueDate] = useState(0);
   const [currentDay, setCurrentDay] = useState(0);
@@ -92,12 +93,37 @@ const HomeScreen = ({ navigation }) => {
       const len = assignments.length;
       let newAssignments = [];
 
+      //Assign a priority score to all the ongoing assignments
+      for (let i = 0; i < len; i++) {
+        if (assignments[i]["finished"] === false) {
+          assignments[i]["hoursDaily"] = getRecommendedHours(
+            assignments[i]["estimatedHours"],
+            assignments[i]["hoursLeft"]
+          );
+          assignments[i]["priorityScore"] = getPriorityScore(
+            assignments[i]["percentage"],
+            assignments[i]["hoursDaily"]
+          );
+        }
+      }
+
+      //sort them by the priority score
+      assignments.sort(function (a, b) {
+        return a["priorityScore"] - b["priorityScore"];
+      });
+
+      //   console.log("LENGTH 1", assignments.length);
+
       for (let i = 0; i < len; i++) {
         let assignment = assignments[i];
         if (assignment["finished"] === false) {
           newAssignments.push(assignment);
-          values.push(assignment["percentage"]);
-          weights.push(assignment["hoursDaily"]);
+
+          //We want to add daily tasks based to maximize assignments with most priority
+          values.push(assignment["priorityScore"]);
+
+          //weights are the recommended hours to spend during the day. Max is the total hours to spend daily.
+          weights.push(Math.min(assignment["hoursDaily"], totalHours));
 
           if (assignment["hoursLeft"] > latest) {
             latest = assignment["hoursLeft"];
@@ -105,28 +131,29 @@ const HomeScreen = ({ navigation }) => {
         }
       }
 
-      assignments = newAssignments;
+      assignments = [...newAssignments];
+
+      //   console.log("LENGTH 2", assignments.length);
 
       assignmentMap[day] = knapsack(
         totalHours,
         weights,
         values,
         assignments.length,
-        day,
         assignments
       );
 
       day++;
     }
-    console.log(assignmentMap);
+    // console.log(assignmentMap);
     setMap(assignmentMap);
     setDailyAssignments(assignmentMap[0]);
   };
 
   //uses the dynamic programming knapsack algorithm to assign daily tasks based on their priority
-  function knapsack(totalWeight, weights, values, len, day, assignments) {
+  function knapsack(totalWeight, weights, values, len, assignments) {
     let i, w;
-
+    console.log(totalHours);
     //create an 2d matrix to store our values;
     let table = new Array(len + 1);
     for (i = 0; i < table.length; i++) {
@@ -151,6 +178,7 @@ const HomeScreen = ({ navigation }) => {
 
     // stores the result of Knapsack the maximum value
     let res = table[len][totalWeight];
+    console.log("RESULT", res);
 
     // const finishedAssignmentsCopy = [...finishedAssignments];
     const dailyTasks = [];
@@ -189,6 +217,22 @@ const HomeScreen = ({ navigation }) => {
     return [...dailyTasks];
   }
 
+  const getPriorityScore = (difficultyScore, weight) => {
+    //(DifficultyScore)*(1+weight%)/(Days in advance to work on it)
+    let score = (difficultyScore * (1 + weight)) / 14;
+    console.log(score);
+    return Math.round(score);
+  };
+
+  //Estimated Hours (the hours it will take to finish assignment)= Difficulty Score*5
+  const getEstimatedHours = (difficultyScore) => {
+    return difficultyScore * 5;
+  };
+  //Hours/Day = Estimated Hours/(Days in advance to work on it)
+  const getRecommendedHours = (estimatedHours, days) => {
+    return;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 25 }}>{totalHours} hours of studying daily</Text>
@@ -202,7 +246,7 @@ const HomeScreen = ({ navigation }) => {
             <Text>
               {a.name} {a.course}
             </Text>
-            <Text>Percentage: {a.percentage}</Text>
+            <Text>Score: {a.priorityScore}</Text>
             <Text>{a.totalHours} Total hours to finish assignment</Text>
             <Text>{a.hoursLeft} hours left</Text>
             <Text>{a.hoursDaily} recommended hours today</Text>

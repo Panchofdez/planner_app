@@ -35,11 +35,11 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={HomeStack}
-        /> */}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Creation"
