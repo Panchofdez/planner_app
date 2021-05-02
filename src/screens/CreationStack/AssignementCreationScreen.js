@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import AssignementDetails from "../../Components/AssignementDetails";
-import { FontAwesome } from "@expo/vector-icons";
+
+// Icons
+import PlusSign from "../../Images/plusSign.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -90,7 +92,7 @@ const AssignementCreationScreen = ({ navigation, route }) => {
           >
             {title}
           </Text>
-          <Text style={{ textAlign: "center" }}>
+          <Text style={{ textAlign: "center", fontSize: 16 }}>
             Enter all the following information regarding this course
           </Text>
         </View>
@@ -102,7 +104,7 @@ const AssignementCreationScreen = ({ navigation, route }) => {
             color: "#3A62BF",
             alignSelf: "flex-start",
             marginLeft: 20,
-            marginVertical: 10,
+            marginTop: 20,
           }}
         >
           Assignments/Homework
@@ -127,7 +129,6 @@ const AssignementCreationScreen = ({ navigation, route }) => {
             color: "#3A62BF",
             alignSelf: "flex-start",
             marginLeft: 20,
-            marginVertical: 10,
           }}
         >
           Exams/Quizzes
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F0F0F0",
     justifyContent: "flex-start",
-    paddingTop: windowHeight * 0.15,
+    paddingTop: windowHeight * 0.09,
     alignItems: "center",
   },
 });

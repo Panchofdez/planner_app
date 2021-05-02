@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native";
 import CheckMark from "../../Images/checkMark.svg";
 import ArrowForward from "../../Images/arrowForward.svg";
 import Arrowback from "../../Images/arrowBack.svg";
+import CalendarIcon from "../../Images/calendarIcon.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -149,6 +150,21 @@ const DashboardScreen = () => {
             />
           );
         })}
+      </View>
+
+      <View
+        style={{
+          width: windowWidth,
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          paddingRight: windowWidth * 0.1,
+          marginTop: windowHeight * 0.1,
+          marginBottom: 20,
+        }}
+      >
+        <TouchableOpacity>
+          <CalendarIcon />
+        </TouchableOpacity>
       </View>
       {/* Day switching component */}
       <View

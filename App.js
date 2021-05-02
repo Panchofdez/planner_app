@@ -7,6 +7,8 @@ import CourseSelectionScreen from "./src/screens/CreationStack/CourseSelectionSc
 import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
 import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
+import CalendarScreen from "./src/screens/CalendarScreen";
+import InfoSlidesScreen from "./src/screens/CreationStack/InfoSlidesScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +16,11 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
+          name="InfoSlides"
+          component={InfoSlidesScreen}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Dashboard"
@@ -28,18 +35,32 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
           name="CourseSelection"
           component={CourseSelectionScreen}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="AssignementCreation"
           component={AssignementCreationScreen}
-        />
-
+        /> */}
         {/* <Stack.Screen
         options={{ headerShown: false }}
         name="HoursOfStudy"
         component={HoursOfStudyScreen}
       /> */}
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
+          name="Calendar"
+          component={CalendarScreen}
+        /> */}
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Dashboard"
+          component={DashboardScreen}
+        />
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={HomeStack}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
