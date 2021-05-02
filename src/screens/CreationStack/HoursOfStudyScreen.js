@@ -89,7 +89,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
       <Button
         onPress={() => {
           dispatch(loadHours(hours));
-          navigation.navigate("Dashboard");
+          navigation.navigate("HomeScreen");
         }}
         buttonStyle={{
           height: 46,

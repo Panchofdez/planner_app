@@ -23,11 +23,6 @@ const MainNavigator = () => {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="HomeScreen"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
           name="InfoSlides"
           component={InfoSlidesScreen}
         />
@@ -55,6 +50,11 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
           name="Dashboard"
           component={DashboardScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HomeScreen"
+          component={HomeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

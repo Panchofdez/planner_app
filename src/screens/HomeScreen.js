@@ -48,86 +48,68 @@ const courseList = [
 ];
 
 const COLOURS = ["#939BFF", "#6FB75E", "#C662BE", "CHEM 120"];
-let allAssignments = [
-  {
-    name: "Assignment 1",
-    course: "CPS412",
-    weight: 45,
-    estimated: 20,
-    hoursLeft: 20,
-    hoursDaily: 2,
-    difficulty: 3,
-    finished: false,
-    dueDate: "May 12 2021",
-    daysLeft: 10,
-  },
-  {
-    name: "Assignment 2",
-    course: "CPS209",
-    weight: 30,
-    estimatedHours: 10,
-    hoursLeft: 10,
-    hoursDaily: 2,
-    finished: false,
-    difficulty: 4,
-    dueDate: "May 20 2021",
-    daysLeft: 18,
-  },
-  {
-    name: "Assignment 3",
-    course: "MTH110",
-    weight: 50,
-    estimatedHours: 15,
-    hoursLeft: 15,
-    hoursDaily: 3,
-    difficulty: 2,
-    finished: false,
-    dueDate: "May 15 2021",
-    daysLeft: 13,
-  },
-  {
-    name: "Assignment 4",
-    course: "BLG143",
-    weight: 10,
-    estimatedHours: 15,
-    hoursLeft: 15,
-    hoursDaily: 1,
-    difficulty: 1,
-    finished: false,
-    dueDate: "May 7 2021",
-    daysLeft: 5,
-  },
-];
+// let assignments = [
+//   {
+//     name: "Assignment 1",
+//     course: "CPS412",
+//     weight: 45,
+//     estimatedHours: 20,
+//     hoursLeft: 20,
+//     hoursDaily: 2,
+//     difficulty: 3,
+//     finished: false,
+//     dueDate: "May 12 2021",
+//     daysLeft: 10,
+//   },
+//   {
+//     name: "Assignment 2",
+//     course: "CPS209",
+//     weight: 30,
+//     estimatedHours: 10,
+//     hoursLeft: 10,
+//     hoursDaily: 2,
+//     finished: false,
+//     difficulty: 4,
+//     dueDate: "May 20 2021",
+//     daysLeft: 18,
+//   },
+//   {
+//     name: "Assignment 3",
+//     course: "MTH110",
+//     weight: 50,
+//     estimatedHours: 15,
+//     hoursLeft: 15,
+//     hoursDaily: 3,
+//     difficulty: 2,
+//     finished: false,
+//     dueDate: "May 15 2021",
+//     daysLeft: 13,
+//   },
+//   {
+//     name: "Assignment 4",
+//     course: "BLG143",
+//     weight: 10,
+//     estimatedHours: 15,
+//     hoursLeft: 15,
+//     hoursDaily: 1,
+//     difficulty: 1,
+//     finished: false,
+//     dueDate: "May 7 2021",
+//     daysLeft: 5,
+//   },
+// ];
 
 const HomeScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const assignments = useSelector((state) => state.assignments);
-  const hours = useSelector((state) => state.totalHours);
-  const finishedAssignments = [];
-  console.log("assignment", assignments);
-  console.log(allAssignments);
 
-  //All assignments to do
-  // const [assignments1, setAssignments1] = useState(allAssignments);
+  const hours = useSelector((state) => state.totalHours);
+  let finishedAssignments = [];
+  console.log("assignment", assignments);
 
   useEffect(() => {
-    // console.log("USE EFFECT");
-    // console.log(assignments1);
-
-    // //if we need to assign the daily tasks
-    // if (
-    //   dailyAssignments &&
-    //   dailyAssignments.length === 0 &&
-    //   assignments1 &&
-    //   assignments1.length > 0
-    // ) {
-    //   console.log("ASSIGNMENTS 2", assignments1);
-
-    optimize2(allAssignments);
-  }, []);
-
-  //Assignments that are finished
-  // const [finishedAssignments, setFinishedAssignments] = useState([]);
+    optimizeSchedule();
+  }, [assignments]);
 
   //assignments that are assigned for the day
   const [dailyAssignments, setDailyAssignments] = useState([]);
@@ -152,276 +134,130 @@ const HomeScreen = ({ navigation, route }) => {
 
   console.log(`${percentComplete}%`);
 
-  function knapsack(W, wt, val, n, assignments) {
-    let i, w;
-    let K = new Array(n + 1);
-    for (i = 0; i < K.length; i++) {
-      K[i] = new Array(W + 1);
-      for (let j = 0; j < W + 1; j++) {
-        K[i][j] = 0;
-      }
-    }
-
-    // Build table K[][] in bottom up manner
-    for (i = 0; i <= n; i++) {
-      for (w = 0; w <= W; w++) {
-        if (i == 0 || w == 0) K[i][w] = 0;
-        else if (wt[i - 1] <= w)
-          K[i][w] = Math.max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
-        else K[i][w] = K[i - 1][w];
-      }
-    }
-
-    // stores the result of Knapsack
-    let res = K[n][W];
-    console.log(res + "<br>");
-    let dailyTasks = [];
-    w = W;
-    for (i = n; i > 0 && res > 0; i--) {
-      // either the result comes from the top
-      // (K[i-1][w]) or from (val[i-1] + K[i-1]
-      // [w-wt[i-1]]) as in Knapsack table. If
-      // it comes from the latter one/ it means
-      // the item is included.
-      if (res == K[i - 1][w]) continue;
-      else {
-        // This item is included.
-        console.log(wt[i - 1] + " ");
-        let index = i - 1;
-
-        let assignment = assignments[index];
-        // let dailyTasks = [];
-        // //Updated the given assignment total hours. If the hours left to finish assignment is 0 or less then the assignment is finished
-        // let updatedHours = assignment["hoursLeft"] - assignment["hoursDaily"];
-        // if (updatedHours <= 0) {
-        //   assignment["hoursLeft"] = 0;
-        //   assignment["finished"] = true;
-        //   finishedAssignments.push(assignment);
-        // } else {
-        //   assignment["hoursLeft"] = updatedHours;
-        // }
-        dailyTasks.push({ ...assignment });
-        // Since this weight is included its
-        // value is deducted
-        res = res - val[i - 1];
-        w = w - wt[i - 1];
-      }
-    }
-    return [...dailyTasks];
-  }
-
-  const optimize2 = (assignments) => {
-    let weights = [];
-    let values = [];
-    let assignmentMap = {};
-    let len = assignments.length;
+  const optimizeSchedule = () => {
     let day = 0;
-    //Assign a priority score to all the ongoing assignments
-    while (day < 10) {
+    let latest = 0;
+    let assignmentMap = {};
+    while (finishedAssignments.length < assignments.length || day < latest) {
+      let values = [];
+      let weights = [];
+      const len = assignments.length;
+      let newAssignments = [];
+
+      //Assign a priority score to all the ongoing assignments
+      for (let i = 0; i < len; i++) {
+        if (assignments[i]["finished"] === false) {
+          assignments[i]["priorityScore"] = getPriorityScore(
+            assignments[i]["estimatedHours"],
+            assignments[i]["hoursDaily"]
+          );
+        }
+      }
+
+      //sort them by the priority score
+      assignments.sort(function (a, b) {
+        return a["priorityScore"] - b["priorityScore"];
+      });
+
       for (let i = 0; i < len; i++) {
         let assignment = assignments[i];
-        //We want to add daily tasks based to maximize assignments with most priority
-        values.push(assignment["weight"]);
+        if (assignment["finished"] === false) {
+          newAssignments.push(assignment);
 
-        //weights are the recommended hours to spend during the day. Max is the total hours to spend daily.
-        weights.push(Math.min(assignment["hoursDaily"], totalHours));
+          //We want to add daily tasks based to maximize assignments with most priority
+          values.push(assignment["priorityScore"]);
+
+          //weights are the recommended hours to spend during the day. Max is the total hours to spend daily.
+          weights.push(Math.min(assignment["hoursDaily"], totalHours));
+
+          if (assignment["hoursLeft"] > latest) {
+            latest = assignment["hoursLeft"];
+          }
+        }
       }
-      let result = knapsack(totalHours, weights, values, len, assignments);
-      assignmentMap[day] = result;
+
+      assignmentMap[day] = knapsack(
+        totalHours,
+        weights,
+        values,
+        assignments.length
+      );
+
       day++;
     }
 
     setMap(assignmentMap);
+    console.log("MAP", assignmentMap);
     setDailyAssignments(assignmentMap[0]);
   };
 
-  // const optimizeSchedule = (assignments) => {
-  //   let day = 0;
-  //   let latest = 0;
-  //   let finishedAssignments = [];
-  //   let assignmentMap = {};
-  //   while (finishedAssignments.length < assignments.length || day < latest) {
-  //     let values = [];
-  //     let weights = [];
-  //     const len = assignments.length;
-  //     let newAssignments = [];
-
-  //     //Assign a priority score to all the ongoing assignments
-  //     for (let i = 0; i < len; i++) {
-  //       if (assignments[i]["finished"] === false) {
-  //         assignments[i]["priorityScore"] = getPriorityScore(
-  //           assignments[i]["estimatedHours"],
-  //           assignments[i]["hoursDaily"]
-  //         );
-  //       }
-  //     }
-
-  //     //sort them by the priority score
-  //     assignments.sort(function (a, b) {
-  //       return a["priorityScore"] - b["priorityScore"];
-  //     });
-
-  //     for (let i = 0; i < len; i++) {
-  //       let assignment = assignments[i];
-  //       if (assignment["finished"] === false) {
-  //         newAssignments.push(assignment);
-
-  //         //We want to add daily tasks based to maximize assignments with most priority
-  //         values.push(assignment["priorityScore"]);
-
-  //         //weights are the recommended hours to spend during the day. Max is the total hours to spend daily.
-  //         weights.push(Math.min(assignment["hoursDaily"], totalHours));
-
-  //         if (assignment["hoursLeft"] > latest) {
-  //           latest = assignment["hoursLeft"];
-  //         }
-  //       }
-  //     }
-
-  //     assignments = [...newAssignments];
-
-  //     assignmentMap[day] = knapsack(
-  //       totalHours,
-  //       weights,
-  //       values,
-  //       assignments.length,
-  //       assignments
-  //     );
-
-  //     day++;
-  //   }
-
-  //   setMap(assignmentMap);
-  //   console.log(assignmentMap);
-  //   setDailyAssignments(assignmentMap[0]);
-  // };
-
-  // Prints the items which are put
-  // in a knapsack of capacity W
-  // function knapsack(W, wt, val, n) {
-  //   let i, w;
-  //   let K = new Array(n + 1);
-  //   for (i = 0; i < K.length; i++) {
-  //     K[i] = new Array(W + 1);
-  //     for (let j = 0; j < W + 1; j++) {
-  //       K[i][j] = 0;
-  //     }
-  //   }
-
-  //   // Build table K[][] in bottom up manner
-  //   for (i = 0; i <= n; i++) {
-  //     for (w = 0; w <= W; w++) {
-  //       if (i == 0 || w == 0) K[i][w] = 0;
-  //       else if (wt[i - 1] <= w)
-  //         K[i][w] = Math.max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
-  //       else K[i][w] = K[i - 1][w];
-  //     }
-  //   }
-
-  //   // stores the result of Knapsack
-  //   let res = K[n][W];
-  //   console.log(res + "<br>");
-  //   let dailyTasks = [];
-  //   w = W;
-  //   for (i = n; i > 0 && res > 0; i--) {
-  //     // either the result comes from the top
-  //     // (K[i-1][w]) or from (val[i-1] + K[i-1]
-  //     // [w-wt[i-1]]) as in Knapsack table. If
-  //     // it comes from the latter one/ it means
-  //     // the item is included.
-  //     if (res == K[i - 1][w]) continue;
-  //     else {
-  //       // This item is included.
-  //       console.log(wt[i - 1] + " ");
-  //       let index = i - 1;
-
-  //       let assignment = assignments[index];
-  //       // let dailyTasks = [];
-  //       // //Updated the given assignment total hours. If the hours left to finish assignment is 0 or less then the assignment is finished
-  //       // let updatedHours = assignment["hoursLeft"] - assignment["hoursDaily"];
-  //       // if (updatedHours <= 0) {
-  //       //   assignment["hoursLeft"] = 0;
-  //       //   assignment["finished"] = true;
-  //       //   finishedAssignments.push(assignment);
-  //       // } else {
-  //       //   assignment["hoursLeft"] = updatedHours;
-  //       // }
-  //       dailyTasks.push({ ...assignment });
-  //       // Since this weight is included its
-  //       // value is deducted
-  //       res = res - val[i - 1];
-  //       w = w - wt[i - 1];
-  //     }
-  //   }
-  //   return [...dailyTasks];
-  // }
-
   // //uses the dynamic programming knapsack algorithm to assign daily tasks based on their priority
-  // function knapsack(totalWeight, weights, values, len, assignments) {
-  //   let i, w;
 
-  //   //create an 2d matrix to store our values;
-  //   let table = new Array(len + 1);
-  //   for (i = 0; i < table.length; i++) {
-  //     table[i] = new Array(totalWeight + 1);
-  //     for (let j = 0; j < totalWeight + 1; j++) {
-  //       table[i][j] = 0;
-  //     }
-  //   }
+  function knapsack(totalWeight, weights, values, len) {
+    let i, w;
 
-  //   // Build table[i][w] in bottom up manner
-  //   for (i = 0; i <= len; i++) {
-  //     for (w = 0; w <= totalWeight; w++) {
-  //       if (i == 0 || w == 0) table[i][w] = 0;
-  //       else if (weights[i - 1] <= w)
-  //         table[i][w] = Math.max(
-  //           values[i - 1] + table[i - 1][w - weights[i - 1]],
-  //           table[i - 1][w]
-  //         );
-  //       else table[i][w] = table[i - 1][w];
-  //     }
-  //   }
+    //create an 2d matrix to store our values;
+    let table = new Array(len + 1);
+    for (i = 0; i < table.length; i++) {
+      table[i] = new Array(totalWeight + 1);
+      for (let j = 0; j < totalWeight + 1; j++) {
+        table[i][j] = 0;
+      }
+    }
 
-  //   // stores the result of Knapsack the maximum value
-  //   let res = table[len][totalWeight];
-  //   console.log("RESULT", res);
+    // Build table[i][w] in bottom up manner
+    for (i = 0; i <= len; i++) {
+      for (w = 0; w <= totalWeight; w++) {
+        if (i == 0 || w == 0) table[i][w] = 0;
+        else if (weights[i - 1] <= w)
+          table[i][w] = Math.max(
+            values[i - 1] + table[i - 1][w - weights[i - 1]],
+            table[i - 1][w]
+          );
+        else table[i][w] = table[i - 1][w];
+      }
+    }
 
-  //   // const finishedAssignmentsCopy = [...finishedAssignments];
-  //   const dailyTasks = [];
+    // stores the result of Knapsack the maximum value
+    let res = table[len][totalWeight];
+    console.log("RESULT", res);
 
-  //   w = totalWeight;
-  //   for (i = len; i > 0 && res > 0; i--) {
-  //     // either the result comes from the top
-  //     // (table[i-1][w]) or from (values[i-1] + table[i-1]
-  //     // [w-weight[i-1]]) as in Knapsack table. If
-  //     // it comes from the latter one/ it means
-  //     // the item is included.
-  //     if (res == table[i - 1][w]) continue;
-  //     else {
-  //       // This item is included.
-  //       let index = i - 1;
-  //       console.log(weights[index] + " ");
+    // const finishedAssignmentsCopy = [...finishedAssignments];
+    const dailyTasks = [];
 
-  //       let assignment = assignments[index];
+    w = totalWeight;
+    for (i = len; i > 0 && res > 0; i--) {
+      // either the result comes from the top
+      // (table[i-1][w]) or from (values[i-1] + table[i-1]
+      // [w-weight[i-1]]) as in Knapsack table. If
+      // it comes from the latter one/ it means
+      // the item is included.
+      if (res == table[i - 1][w]) continue;
+      else {
+        // This item is included.
+        let index = i - 1;
+        console.log(weights[index] + " ");
 
-  //       //Updated the given assignment total hours. If the hours left to finish assignment is 0 or less then the assignment is finished
-  //       let updatedHours = assignment["hoursLeft"] - assignment["hoursDaily"];
-  //       if (updatedHours <= 0) {
-  //         assignment["hoursLeft"] = 0;
-  //         assignment["finished"] = true;
-  //         finishedAssignments.push(assignment);
-  //       } else {
-  //         assignment["hoursLeft"] = updatedHours;
-  //       }
-  //       dailyTasks.push({ ...assignment });
-  //       // Since this weight is included its
-  //       // value is deducted
-  //       res = res - values[index];
-  //       w = w - weights[index];
-  //     }
-  //   }
-  //   return [...dailyTasks];
-  // }
+        let assignment = assignments[index];
+
+        //Updated the given assignment total hours. If the hours left to finish assignment is 0 or less then the assignment is finished
+        let updatedHours = assignment["hoursLeft"] - assignment["hoursDaily"];
+        if (updatedHours <= 0) {
+          assignment["hoursLeft"] = 0;
+          assignment["finished"] = true;
+          finishedAssignments.push(assignment);
+        } else {
+          assignment["hoursLeft"] = updatedHours;
+        }
+        dailyTasks.push({ ...assignment });
+        // Since this weight is included its
+        // value is deducted
+        res = res - values[index];
+        w = w - weights[index];
+      }
+    }
+    return [...dailyTasks];
+  }
 
   const getPriorityScore = (difficultyScore, weight) => {
     //(DifficultyScore)*(1+weight%)/(Days in advance to work on it)
