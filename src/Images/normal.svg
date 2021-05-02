@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+  <g id="emoticon-square-face-with-closed-eyes-and-mouth-of-straight-lines" transform="translate(0 0)" opacity="0.5">
+    <g id="Group_31" data-name="Group 31">
+      <path id="Path_29" data-name="Path 29" d="M21.343,21.342a12.506,12.506,0,1,0-17.686,0A12.519,12.519,0,0,0,21.343,21.342ZM5.021,5.021a10.577,10.577,0,1,1,0,14.958A10.589,10.589,0,0,1,5.021,5.021Z" transform="translate(0 0)" fill="#3a62bf"/>
+      <path id="Path_30" data-name="Path 30" d="M26.261,37.038h3.215a.757.757,0,1,0,0-1.513H26.261a.757.757,0,1,0,0,1.513Z" transform="translate(-19.52 -27.162)" fill="#3a62bf"/>
+      <path id="Path_31" data-name="Path 31" d="M61.643,37.039h3.215a.757.757,0,1,0,0-1.513H61.643a.757.757,0,0,0,0,1.513Z" transform="translate(-46.6 -27.162)" fill="#3a62bf"/>
+      <path id="Path_32" data-name="Path 32" d="M30.423,68.387a.837.837,0,0,0,.836.836h9.2a.836.836,0,1,0,0-1.673h-9.2A.836.836,0,0,0,30.423,68.387Z" transform="translate(-23.359 -51.65)" fill="#3a62bf"/>
+    </g>
+  </g>
+</svg>

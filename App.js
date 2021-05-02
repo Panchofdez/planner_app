@@ -6,6 +6,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import CourseSelectionScreen from "./src/screens/CreationStack/CourseSelectionScreen";
 import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
+import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
 
 const Stack = createStackNavigator();
 
@@ -22,10 +23,15 @@ const CreationStack = () => {
         name="HoursOfStudy"
         component={HoursOfStudyScreen}
       /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         options={{ headerShown: false }}
         name="AssignementCreation"
         component={AssignementCreationScreen}
+      /> */}
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Dashboard"
+        component={DashboardScreen}
       />
     </Stack.Navigator>
   );
