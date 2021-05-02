@@ -1,31 +1,47 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, SafeAreaView } from "react-native";
 import moment from "moment";
+import { TouchableOpacity } from "react-native";
+
+//  Icons
+import CheckMark from "../../Images/checkMark.svg";
+import ArrowForward from "../../Images/arrowForward.svg";
+import Arrowback from "../../Images/arrowBack.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
 //  List of courses
 const courseList = [
-  { name: "CHEM 120", dailyHoursCompleted: false },
-  { name: "PHY 223", dailyHoursCompleted: false },
-  { name: "BIO 111", dailyHoursCompleted: false },
-  { name: "MAT 100", dailyHoursCompleted: false },
+  {
+    name: "CHEM 120",
+    colour: "#EF6565",
+    assignement: "Assignement 3",
+    hoursOfWork: 2,
+  },
+  {
+    name: "PHY 223",
+    colour: "#C662BE",
+    assignement: "Lab 3",
+    hoursOfWork: 2,
+  },
+  {
+    name: "BIO 111",
+    colour: "#6FB75E",
+    assignement: "Quiz 2",
+    hoursOfWork: 1,
+  },
+  {
+    name: "MAT 100",
+    colour: "#939BFF",
+    assignement: "Problem Set 3",
+    hoursOfWork: 1,
+  },
 ];
 
-//   Updating Study Hours Completion Status
-const StudyHoursCompleted = () => {
-  const item = {
-    id: updatedCourseList.length,
-    title: `Add Course ${updatedCourseList.length + 1}`,
-  };
-  setUpdatedCourseList([...updatedCourseList, item]);
-};
-
 const DashboardScreen = () => {
-  const [updatedCourseList, setUpdatedCourseList] = useState(courseList);
   // Current Date
   var date = moment().format("dddd, MMMM Do");
+  var currentDay = moment().format("Do");
   // As user fills checkmarks this will go up
   const [dailyHoursCompleted, setDailyHoursCompleted] = useState(0);
   // Total daily hours of work to do
@@ -34,6 +50,9 @@ const DashboardScreen = () => {
     (dailyHoursCompleted / totalHoursTodo) *
     100
   ).toFixed(0);
+
+  //  state for date
+  const [day, setDay] = useState(date);
 
   console.log(`${percentComplete}%`);
   return (
@@ -112,11 +131,164 @@ const DashboardScreen = () => {
         </View>
       </View>
       {/* Check list */}
-      <View></View>
+      <View
+        style={{
+          width: windowWidth,
+          alignItems: "center",
+        }}
+      >
+        {courseList.map((item) => {
+          return (
+            <CheckListItem
+              key={item.name}
+              colour={item.colour}
+              course={item.name}
+              assignement={item.assignement}
+              hoursOfWork={item.hoursOfWork}
+              stateID={item.stateID}
+            />
+          );
+        })}
+      </View>
+      {/* Day switching component */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {}}
+          style={{
+            borderColor: "#4C74D0",
+            borderWidth: 4,
+            borderRadius: 50,
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Arrowback />
+        </TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: "#4C74D0",
+            borderRadius: 50,
+            height: 80,
+            width: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: 30,
+            marginRight: 30,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 30,
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            {currentDay}
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={{
+            borderRadius: 2,
+            borderColor: "#4C74D0",
+            borderRadius: 50,
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 4,
+          }}
+        >
+          <ArrowForward />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
+// Checklist Item
+const CheckListItem = ({
+  colour,
+  course,
+  assignement,
+  hoursOfWork,
+  stateID,
+}) => {
+  return (
+    <View
+      style={{
+        width: windowWidth,
+        justifyContent: "center",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 20,
+      }}
+    >
+      {/* check box */}
+      <TouchableOpacity
+        onPress={() => {}}
+        style={{
+          height: 50,
+          marginRight: 10,
+          width: 50,
+          borderRadius: 50,
+          backgroundColor: "white",
+          shadowColor: "black",
+          justifyContent: "center",
+          alignItems: "center",
+          shadowOffset: {
+            height: 10,
+            width: 0,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 8,
+        }}
+      >
+        <CheckMark />
+      </TouchableOpacity>
+      {/* item information */}
+      <View
+        style={{
+          backgroundColor: colour,
+          width: 261,
+          height: 66,
+          borderRadius: 30,
+          alignItems: "center",
+          flexDirection: "row",
+          paddingRight: 25,
+          paddingLeft: 25,
+          justifyContent: "space-between",
+          shadowColor: "black",
+          shadowOffset: {
+            height: 10,
+            width: 0,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 8,
+        }}
+      >
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+            {course}
+          </Text>
+          <Text style={{ fontSize: 14, color: "white" }}>{assignement}</Text>
+        </View>
+        <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+          {hoursOfWork}Hr(s)
+        </Text>
+      </View>
+    </View>
+  );
+};
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
