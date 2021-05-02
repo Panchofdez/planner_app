@@ -107,6 +107,14 @@ const CreationScreen = () => {
           </View>
 
           <Button
+            onPress={() => {
+              navigation.navigate("TransactionModal", {
+                screen: "ConfirmationCustomCategoryScreen",
+                params: {
+                  updatedCourseList: updatedCourseList,
+                },
+              });
+            }}
             buttonStyle={{
               height: 58,
               width: windowWidth * 0.45,
