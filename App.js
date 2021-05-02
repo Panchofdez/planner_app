@@ -8,8 +8,12 @@ import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
 import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
+import configureStore from "./src/store";
+import { Provider } from "react-redux";
 
 const Stack = createStackNavigator();
+
+const store = configureStore();
 
 const MainNavigator = () => {
   return (
@@ -52,6 +56,10 @@ const MainNavigator = () => {
 };
 
 const App = () => {
-  return <MainNavigator />;
+  return (
+    <Provider store={store}>
+      <MainNavigator />
+    </Provider>
+  );
 };
 export default App;
