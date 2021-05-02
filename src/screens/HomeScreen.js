@@ -45,8 +45,6 @@ let allAssignments = [
   },
 ];
 
-// const map = {};
-
 const HomeScreen = () => {
   const finishedAssignments = [];
 

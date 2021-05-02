@@ -33,11 +33,11 @@ const windowHeight = Dimensions.get("window").height;
 
 const CreationScreen = ({ navigation }) => {
   const [courseList, setCourseList] = useState(courseList1);
-  const [course1, setCourse1] = useState();
-  const [course2, setCourse2] = useState();
-  const [course3, setCourse3] = useState();
-  const [course4, setCourse4] = useState();
-  const [course5, setCourse5] = useState();
+  const [course1, setCourse1] = useState("");
+  const [course2, setCourse2] = useState("");
+  const [course3, setCourse3] = useState("");
+  const [course4, setCourse4] = useState("");
+  const [course5, setCourse5] = useState("");
   const [numInputs, setNumInputs] = useState(3);
 
   //   Adding course to our list
@@ -215,10 +215,14 @@ const CreationScreen = ({ navigation }) => {
               if (course4 != "") {
                 data.push(course4);
               }
-              if (cours5 != "") {
+              if (course5 != "") {
                 data.push(course5);
               }
               console.log(data);
+              if (data.length === 0) {
+                return;
+              }
+
               navigation.push("AssignementCreation", {
                 courseList: data,
                 idx: 0,

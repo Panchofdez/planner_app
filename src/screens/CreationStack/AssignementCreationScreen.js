@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,8 +16,64 @@ const windowHeight = Dimensions.get("window").height;
 
 const AssignementCreationScreen = ({ navigation, route }) => {
   const { courseList, idx, assignments } = route.params;
+  const [numAssignments, setNumAssignments] = useState(1);
+  const [numExams, setNumExams] = useState(1);
 
-  console.log(courseList);
+  const addAssignment = (data, type) => {
+    let estimatedHours = getEstimatedHours(data["difficulty"]);
+    let recommendedHours = getRecommendedHours(
+      estimatedHours,
+      data["daysLeft"]
+    );
+    assignments.push({
+      ...data,
+      course: title,
+      finished: false,
+      recommendedHours,
+      estimatedHours,
+      hoursLeft: estimatedHours,
+      type,
+    });
+    if (type == "Assignments") {
+      setNumAssignments(numAssignments + 1);
+    } else {
+      setNumExams(numExams + 1);
+    }
+  };
+
+  //Estimated Hours (the hours it will take to finish assignment)= Difficulty Score*5
+  const getEstimatedHours = (difficultyScore) => {
+    return difficultyScore * 5;
+  };
+  //Hours/Day = Estimated Hours/(Days in advance to work on it)
+  const getRecommendedHours = (estimatedHours, days) => {
+    return Math.round(estimatedHours / days);
+  };
+  const showAssignmentInputs = () => {
+    const inputs = [];
+    for (let i = 0; i < numAssignments; i++) {
+      inputs.push(
+        <AssignementDetails
+          addAssignment={addAssignment}
+          key={i}
+          type="Assignment"
+        />
+      );
+    }
+    return inputs;
+  };
+
+  const showExamInputs = () => {
+    const inputs = [];
+    for (let i = 0; i < numExams; i++) {
+      inputs.push(
+        <AssignementDetails addAssignment={addAssignment} key={i} type="Exam" />
+      );
+    }
+    return inputs;
+  };
+
+  console.log(assignments);
   console.log(idx);
   let title = courseList[idx];
   return (
@@ -51,9 +107,9 @@ const AssignementCreationScreen = ({ navigation, route }) => {
         >
           Assignments/Homework
         </Text>
-        <AssignementDetails />
+        {showAssignmentInputs()}
 
-        <Button
+        {/* <Button
           icon={<FontAwesome name="plus" size={24} color="#3A62BF" />}
           buttonStyle={{
             borderRadius: 50,
@@ -62,7 +118,7 @@ const AssignementCreationScreen = ({ navigation, route }) => {
             width: 50,
             marginVertical: 10,
           }}
-        />
+        /> */}
 
         <Text
           style={{
@@ -76,17 +132,8 @@ const AssignementCreationScreen = ({ navigation, route }) => {
         >
           Exams/Quizzes
         </Text>
-        <AssignementDetails />
-        <Button
-          icon={<FontAwesome name="plus" size={24} color="#3A62BF" />}
-          buttonStyle={{
-            borderRadius: 50,
-            backgroundColor: "white",
-            height: 50,
-            width: 50,
-            marginVertical: 10,
-          }}
-        />
+        {showExamInputs()}
+
         <Button
           title="Continue"
           buttonStyle={{
@@ -97,7 +144,7 @@ const AssignementCreationScreen = ({ navigation, route }) => {
             marginVertical: 10,
           }}
           onPress={() => {
-            if (idx === courseList.length) {
+            if (idx === courseList.length - 1) {
               navigation.push("HomeScreen", {
                 courseDetails: courseList,
               });

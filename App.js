@@ -57,11 +57,6 @@ const MainNavigator = () => {
           name="Home"
           component={HomeStack}
         /> */}
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Creation"
-          component={CreationStack}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
