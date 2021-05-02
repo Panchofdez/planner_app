@@ -47,7 +47,7 @@ let allAssignments = [
 
 // const map = {};
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const finishedAssignments = [];
 
   //this will store the latest due date for an assignement
@@ -277,8 +277,6 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
-export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -288,3 +286,4 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 });
+export default HomeScreen;

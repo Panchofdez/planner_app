@@ -13,7 +13,7 @@ import { Input, Button } from "react-native-elements";
 // Icons
 import PlusSign from "../../Images/plusSign.svg";
 
-const courseList = [
+const courseList1 = [
   {
     id: 0,
     title: "Add Course 1",
@@ -31,15 +31,22 @@ const courseList = [
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const CreationScreen = () => {
-  const [updatedCourseList, setUpdatedCourseList] = useState(courseList);
+const CreationScreen = ({ navigation }) => {
+  const [courseList, setCourseList] = useState(courseList1);
+  const [course1, setCourse1] = useState();
+  const [course2, setCourse2] = useState();
+  const [course3, setCourse3] = useState();
+  const [course4, setCourse4] = useState();
+  const [course5, setCourse5] = useState();
+  const [numInputs, setNumInputs] = useState(3);
+
   //   Adding course to our list
   const AddCourse = () => {
     const item = {
-      id: updatedCourseList.length,
-      title: `Add Course ${updatedCourseList.length + 1}`,
+      id: courseList.length,
+      title: `Add Course ${courseList.length + 1}`,
     };
-    setUpdatedCourseList([...updatedCourseList, item]);
+    setCourseList([...courseList, item]);
   };
 
   return (
@@ -84,14 +91,101 @@ const CreationScreen = () => {
                 // height: windowHeight * 0.4,
               }}
             >
-              {updatedCourseList.map((course) => {
-                return (
-                  <AddCourseContainer
-                    key={`${course.title}-${course.id}`}
-                    title={course.title}
+              <View style={{ margin: 10 }}>
+                <Input
+                  placeholder="Add course 1"
+                  value={course1}
+                  textAlign="center"
+                  placeholderTextColor="rgba(79,116,208,0.5)"
+                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  containerStyle={{
+                    height: 44,
+                    width: windowWidth * 0.6,
+                    backgroundColor: "white",
+                    borderRadius: 25,
+                  }}
+                  inputContainerStyle={{ borderColor: "white" }}
+                  onChangeText={setCourse1}
+                />
+              </View>
+              <View style={{ margin: 10 }}>
+                <Input
+                  placeholder="Add course 2"
+                  value={course2}
+                  textAlign="center"
+                  placeholderTextColor="rgba(79,116,208,0.5)"
+                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  containerStyle={{
+                    height: 44,
+                    width: windowWidth * 0.6,
+                    backgroundColor: "white",
+                    borderRadius: 25,
+                  }}
+                  inputContainerStyle={{ borderColor: "white" }}
+                  onChangeText={setCourse2}
+                />
+              </View>
+              <View style={{ margin: 10 }}>
+                <Input
+                  placeholder="Add course 3"
+                  value={course3}
+                  textAlign="center"
+                  placeholderTextColor="rgba(79,116,208,0.5)"
+                  inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                  containerStyle={{
+                    height: 44,
+                    width: windowWidth * 0.6,
+                    backgroundColor: "white",
+                    borderRadius: 25,
+                  }}
+                  inputContainerStyle={{ borderColor: "white" }}
+                  onChangeText={setCourse3}
+                />
+              </View>
+              {numInputs > 3 && (
+                <View style={{ margin: 10 }}>
+                  <Input
+                    placeholder="Add course 4"
+                    value={course4}
+                    textAlign="center"
+                    placeholderTextColor="rgba(79,116,208,0.5)"
+                    inputStyle={{
+                      color: "rgb(79,116,208)",
+                      fontWeight: "bold",
+                    }}
+                    containerStyle={{
+                      height: 44,
+                      width: windowWidth * 0.6,
+                      backgroundColor: "white",
+                      borderRadius: 25,
+                    }}
+                    inputContainerStyle={{ borderColor: "white" }}
+                    onChangeText={setCourse4}
                   />
-                );
-              })}
+                </View>
+              )}
+              {numInputs > 4 && (
+                <View style={{ margin: 10 }}>
+                  <Input
+                    placeholder="Add course 5"
+                    value={course5}
+                    textAlign="center"
+                    placeholderTextColor="rgba(79,116,208,0.5)"
+                    inputStyle={{
+                      color: "rgb(79,116,208)",
+                      fontWeight: "bold",
+                    }}
+                    containerStyle={{
+                      height: 44,
+                      width: windowWidth * 0.6,
+                      backgroundColor: "white",
+                      borderRadius: 25,
+                    }}
+                    inputContainerStyle={{ borderColor: "white" }}
+                    onChangeText={setCourse5}
+                  />
+                </View>
+              )}
             </View>
             <Button
               buttonStyle={{
@@ -102,17 +196,33 @@ const CreationScreen = () => {
                 backgroundColor: "white",
               }}
               icon={<PlusSign />}
-              onPress={() => AddCourse()}
+              onPress={() => setNumInputs(numInputs + 1)}
             />
           </View>
 
           <Button
             onPress={() => {
-              navigation.navigate("TransactionModal", {
-                screen: "ConfirmationCustomCategoryScreen",
-                params: {
-                  updatedCourseList: updatedCourseList,
-                },
+              const data = [];
+              if (course1 != "") {
+                data.push(course1);
+              }
+              if (course2 != "") {
+                data.push(course2);
+              }
+              if (course3 != "") {
+                data.push(course3);
+              }
+              if (course4 != "") {
+                data.push(course4);
+              }
+              if (cours5 != "") {
+                data.push(course5);
+              }
+              console.log(data);
+              navigation.push("AssignementCreation", {
+                courseList: data,
+                idx: 0,
+                assignments: [],
               });
             }}
             buttonStyle={{
@@ -132,25 +242,11 @@ const CreationScreen = () => {
 };
 
 // Add course Container
-const AddCourseContainer = ({ title }) => {
-  return (
-    <View style={{ margin: 10 }}>
-      <Input
-        placeholder={title}
-        textAlign="center"
-        placeholderTextColor="rgba(79,116,208,0.5)"
-        inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
-        containerStyle={{
-          height: 44,
-          width: windowWidth * 0.6,
-          backgroundColor: "white",
-          borderRadius: 25,
-        }}
-        inputContainerStyle={{ borderColor: "white" }}
-      />
-    </View>
-  );
-};
+// const AddCourseContainer = ({ title, setTitle }) => {
+//   return (
+
+//   );
+// };
 export default CreationScreen;
 
 const styles = StyleSheet.create({

@@ -14,7 +14,12 @@ import { FontAwesome } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const AssignementCreationScreen = () => {
+const AssignementCreationScreen = ({ navigation, route }) => {
+  const { courseList, idx, assignments } = route.params;
+
+  console.log(courseList);
+  console.log(idx);
+  let title = courseList[idx];
   return (
     <ScrollView>
       <SafeAreaView style={styles.mainContainer}>
@@ -27,7 +32,7 @@ const AssignementCreationScreen = () => {
               marginBottom: 10,
             }}
           >
-            CHEM 130
+            {title}
           </Text>
           <Text style={{ textAlign: "center" }}>
             Enter all the following information regarding this course
@@ -90,6 +95,19 @@ const AssignementCreationScreen = () => {
             height: 45,
             width: 200,
             marginVertical: 10,
+          }}
+          onPress={() => {
+            if (idx === courseList.length) {
+              navigation.push("HomeScreen", {
+                courseDetails: courseList,
+              });
+            } else {
+              console.log("INDEX", idx);
+              navigation.push("AssignementCreation", {
+                courseList,
+                idx: idx + 1,
+              });
+            }
           }}
         />
       </SafeAreaView>
