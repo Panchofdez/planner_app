@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import CourseSelectionScreen from "./src/screens/CreationStack/CourseSelectionScreen";
 import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
+import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
 
 const Stack = createStackNavigator();
 
@@ -16,10 +17,15 @@ const CreationStack = () => {
         name="CourseSelection"
         component={CourseSelectionScreen}
       /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         options={{ headerShown: false }}
         name="HoursOfStudy"
         component={HoursOfStudyScreen}
+      /> */}
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="AssignementCreation"
+        component={AssignementCreationScreen}
       />
     </Stack.Navigator>
   );
