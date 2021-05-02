@@ -3,7 +3,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/screens/HomeScreen";
-import CreationScreen from "./src/screens/CreationScreen";
+import CourseSelectionScreen from "./src/screens/CreationStack/CourseSelectionScreen";
 
 const Stack = createStackNavigator();
 
@@ -12,8 +12,8 @@ const CreationStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Creation"
-        component={CreateScreen}
+        name="CourseSelection"
+        component={CourseSelectionScreen}
       />
     </Stack.Navigator>
   );
@@ -35,11 +35,11 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={HomeStack}
-        />
+        /> */}
         <Stack.Screen
           options={{ headerShown: false }}
           name="Creation"
