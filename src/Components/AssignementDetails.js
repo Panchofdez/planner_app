@@ -224,7 +224,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(false);
                 }}
               >
-                <Text
+                {/* <Text
                   style={{
                     color: !sad ? "rgba(79,116,208,0.5)" : "rgba(79,116,208,1)",
                     // fontWeight: "bold",
@@ -233,9 +233,9 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   }}
                 >
                   Easy
-                </Text>
-                {/* {!sad && <Sad />}
-                {sad && <SadSelected />} */}
+                </Text> */}
+                {!sad && <Sad />}
+                {sad && <SadSelected />}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -244,7 +244,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(true);
                 }}
               >
-                <Text
+                {/* <Text
                   style={{
                     color: !normal
                       ? "rgba(79,116,208,0.5)"
@@ -255,9 +255,9 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   }}
                 >
                   Normal
-                </Text>
-                {/* {!normal && <Normal />}
-                {normal && <NormalSelected />} */}
+                </Text> */}
+                {!normal && <Normal />}
+                {normal && <NormalSelected />}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -266,7 +266,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(false);
                 }}
               >
-                <Text
+                {/* <Text
                   style={{
                     color: !happy
                       ? "rgba(79,116,208,0.5)"
@@ -277,9 +277,9 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   }}
                 >
                   Hard
-                </Text>
-                {/* {!happy && <Happy />}
-                {happy && <HappySelected />} */}
+                </Text> */}
+                {!happy && <Happy />}
+                {happy && <HappySelected />}
               </TouchableOpacity>
             </View>
           </View>
