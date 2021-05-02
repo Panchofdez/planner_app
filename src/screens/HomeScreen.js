@@ -51,76 +51,80 @@ const COLOURS = ["#939BFF", "#6FB75E", "#C662BE", "CHEM 120"];
 let allAssignments = [
   {
     name: "Assignment 1",
-    course: "CPS109",
-    percentage: 45,
+    course: "CPS412",
+    weight: 45,
     estimated: 20,
     hoursLeft: 20,
     hoursDaily: 2,
     difficulty: 3,
     finished: false,
+    dueDate: "May 12 2021",
+    daysLeft: 10,
   },
   {
     name: "Assignment 2",
     course: "CPS209",
-    percentage: 30,
+    weight: 30,
     estimatedHours: 10,
     hoursLeft: 10,
     hoursDaily: 2,
     finished: false,
     difficulty: 4,
+    dueDate: "May 20 2021",
+    daysLeft: 18,
   },
   {
     name: "Assignment 3",
-    course: "CPS109",
-    percentage: 50,
+    course: "MTH110",
+    weight: 50,
     estimatedHours: 15,
     hoursLeft: 15,
     hoursDaily: 3,
     difficulty: 2,
     finished: false,
+    dueDate: "May 15 2021",
+    daysLeft: 13,
   },
   {
     name: "Assignment 4",
-    course: "CPS310",
-    percentage: 10,
+    course: "BLG143",
+    weight: 10,
     estimatedHours: 15,
     hoursLeft: 15,
     hoursDaily: 1,
     difficulty: 1,
     finished: false,
+    dueDate: "May 7 2021",
+    daysLeft: 5,
   },
 ];
 
 const HomeScreen = ({ navigation, route }) => {
-  const dispatch = useDispatch();
-  const assignments = useSelector((state) => state.assignments);
-  const hours = useSelector((state) => state.totalHours);
+  // const dispatch = useDispatch();
+  // const assignments = useSelector((state) => state.assignments);
+  // const hours = useSelector((state) => state.totalHours);
   const finishedAssignments = [];
 
-  console.log(assignments);
+  console.log(allAssignments);
 
   //All assignments to do
-  const [assignments1, setAssignments1] = useState();
-  let initialRender = true;
-  useEffect(() => {
-    if (initialRender) {
-      initialRender = false;
-    } else {
-      console.log("USE EFFECT");
-      console.log(assignments);
+  const [assignments1, setAssignments1] = useState(allAssignments);
 
-      //if we need to assign the daily tasks
-      if (
-        dailyAssignments &&
-        dailyAssignments.length === 0 &&
-        assignments &&
-        assignments.length > 0
-      ) {
-        console.log("ASSIGNMENTS 2", assignments);
-        optimizeSchedule(assignments);
-      }
+  useEffect(() => {
+    console.log("USE EFFECT");
+    console.log(assignments1);
+
+    //if we need to assign the daily tasks
+    if (
+      dailyAssignments &&
+      dailyAssignments.length === 0 &&
+      assignments1 &&
+      assignments1.length > 0
+    ) {
+      console.log("ASSIGNMENTS 2", assignments1);
+      // optimizeSchedule(assignments1);
     }
-  }, [assignments, dailyAssignments]);
+  }, []);
 
   //Assignments that are finished
   // const [finishedAssignments, setFinishedAssignments] = useState([]);
@@ -131,7 +135,7 @@ const HomeScreen = ({ navigation, route }) => {
   //Map that stores all the daily tasks for all the possible days until the latest due date
   const [map, setMap] = useState({});
 
-  const [totalHours, setTotalHours] = useState(hours);
+  const [totalHours, setTotalHours] = useState(5);
 
   const [currentDay, setCurrentDay] = useState(0);
 
@@ -163,10 +167,6 @@ const HomeScreen = ({ navigation, route }) => {
       //Assign a priority score to all the ongoing assignments
       for (let i = 0; i < len; i++) {
         if (assignments[i]["finished"] === false) {
-          //   assignments[i]["hoursDaily"] = getRecommendedHours(
-          //     assignments[i]["estimatedHours"],
-          //     assignments[i]["hoursLeft"]
-          //   );
           assignments[i]["priorityScore"] = getPriorityScore(
             assignments[i]["percentage"],
             assignments[i]["hoursDaily"]

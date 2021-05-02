@@ -19,8 +19,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   LogBox.ignoreLogs(["Expected style "]);
-  const { assignments } = route.params;
-  console.log(assignments);
+
   const [hours, setHours] = useState(0);
   return (
     <SafeAreaView style={styles.mainContainer}>

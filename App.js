@@ -62,11 +62,6 @@ const MainNavigator = () => {
 };
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <MainNavigator />
-    </Provider>
-  );
   let [fontsLoaded] = Font.useFonts({
     BasisGrotesquePro_Bold: require("./assets/fonts/BasisGrotesquePro-Bold.ttf"),
     BasisGrotesquePro: require("./assets/fonts/BasisGrotesquePro-Regular.ttf"),
@@ -74,7 +69,11 @@ const App = () => {
   if (!fontsLoaded) {
     return null;
   } else {
-    return <MainNavigator />;
+    return (
+      <Provider store={store}>
+        <MainNavigator />
+      </Provider>
+    );
   }
 };
 export default App;
