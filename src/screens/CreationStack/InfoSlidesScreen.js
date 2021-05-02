@@ -49,7 +49,9 @@ const InfoSlidesScreen = ({ navigation }) => {
         style={{
           backgroundColor: "transparent",
           borderRadius: 5,
-          height: 250,
+          height: 300,
+          flex: 1,
+          // backgroundColor: "black",
           alignItems: "center",
         }}
       >
@@ -61,7 +63,8 @@ const InfoSlidesScreen = ({ navigation }) => {
           <Text
             style={{
               fontSize: 22,
-              marginBottom: 100,
+              // marginBottom: 100,
+              marginTop: 6,
               color: "black",
               fontFamily: "BasisGrotesquePro",
             }}
@@ -85,6 +88,7 @@ const InfoSlidesScreen = ({ navigation }) => {
           <Text
             style={{
               fontSize: 22,
+              marginTop: 6,
               marginBottom: 100,
               fontFamily: "BasisGrotesquePro",
             }}
@@ -108,10 +112,12 @@ const InfoSlidesScreen = ({ navigation }) => {
         justifyContent: "center",
         alignItems: "center",
         paddingTop: windowHeight * 0.1,
+        // backgroundColor: "black",
       }}
     >
       <View
         style={{
+          // backgroundColor: "black",
           width: windowWidth,
           height: windowHeight * 0.7,
           alignItems: "center",

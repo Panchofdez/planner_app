@@ -51,11 +51,11 @@ const MainNavigator = () => {
           name="Dashboard"
           component={DashboardScreen}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="HomeScreen"
           component={HomeScreen}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
