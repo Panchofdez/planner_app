@@ -23,16 +23,23 @@ const InfoSlidesScreen = ({ navigation }) => {
 
   const carouselItems = [
     {
-      title: "Stay on top of your courses",
+      title: "Stay on",
+      highlighted: "top",
+      title2: "of your courses",
       component: <Top />,
     },
     {
-      title: "Manage your time efficiently",
+      title: "Manage your time",
+      highlighted: "efficiently",
+      title2: "",
       component: <Efficiently />,
     },
     {
-      title: "Personalized smart planner",
+      title: "Personalized",
+      highlighted: "smart",
+      title2: "planner",
       component: <Smart />,
+      // styling: {},
     },
   ];
 
@@ -46,7 +53,30 @@ const InfoSlidesScreen = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: 22, marginBottom: 100 }}>{item.title}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <Text style={{ fontSize: 22, marginBottom: 100, color: "black" }}>
+            {item.title}
+          </Text>
+          <Text
+            style={{
+              marginLeft: 6,
+              marginRight: 6,
+              lineHeight: 40,
+              fontSize: 40,
+              marginBottom: 100,
+              color: "#4C74D0",
+              fontWeight: "bold",
+            }}
+          >
+            {item.highlighted}
+          </Text>
+          <Text style={{ fontSize: 22, marginBottom: 100 }}>{item.title2}</Text>
+        </View>
+
         {/* <Image source={item.source} style={item.styling} /> */}
         {item.component}
       </View>

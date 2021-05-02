@@ -31,14 +31,34 @@ const MainNavigator = () => {
         />
         <Stack.Screen
           options={{ headerShown: false }}
-          name="HomeScreen"
-          component={HomeScreen}
+          name="CourseSelection"
+          component={CourseSelectionScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
+          name="AssignementCreation"
+          component={AssignementCreationScreen}
+        />
+        {/* <Stack.Screen
+        options={{ headerShown: false }}
+        name="HoursOfStudy"
+        component={HoursOfStudyScreen}
+      /> */}
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
+          name="Calendar"
+          component={CalendarScreen}
+        /> */}
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
           name="Dashboard"
           component={DashboardScreen}
-        />
+        /> */}
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={HomeStack}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

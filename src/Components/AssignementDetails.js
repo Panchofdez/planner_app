@@ -142,6 +142,7 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 value={weight}
                 onChangeText={setWeight}
                 placeholder="Weight %"
+                keyboardType="number-pad"
                 inputContainerStyle={{ borderColor: "transparent" }}
                 placeholderTextColor="rgba(79,116,208,0.5)"
                 inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
@@ -210,8 +211,17 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(false);
                 }}
               >
-                {!sad && <Sad />}
-                {sad && <SadSelected />}
+                <Text
+                  style={{
+                    color: !sad ? "rgba(79,116,208,0.5)" : "rgba(79,116,208,1)",
+                    fontWeight: "bold",
+                    fontSize: 18,
+                  }}
+                >
+                  Easy
+                </Text>
+                {/* {!sad && <Sad />}
+                {sad && <SadSelected />} */}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -220,8 +230,19 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(true);
                 }}
               >
-                {!normal && <Normal />}
-                {normal && <NormalSelected />}
+                <Text
+                  style={{
+                    color: !normal
+                      ? "rgba(79,116,208,0.5)"
+                      : "rgba(79,116,208,1)",
+                    fontWeight: "bold",
+                    fontSize: 18,
+                  }}
+                >
+                  Normal
+                </Text>
+                {/* {!normal && <Normal />}
+                {normal && <NormalSelected />} */}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -230,8 +251,19 @@ const AssignementDetails = ({ addAssignment, type }) => {
                   setNormal(false);
                 }}
               >
-                {!happy && <Happy />}
-                {happy && <HappySelected />}
+                <Text
+                  style={{
+                    color: !happy
+                      ? "rgba(79,116,208,0.5)"
+                      : "rgba(79,116,208,1)",
+                    fontWeight: "bold",
+                    fontSize: 18,
+                  }}
+                >
+                  Hard
+                </Text>
+                {/* {!happy && <Happy />}
+                {happy && <HappySelected />} */}
               </TouchableOpacity>
             </View>
           </View>
