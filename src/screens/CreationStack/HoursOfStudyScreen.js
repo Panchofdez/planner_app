@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,9 +13,8 @@ import { Button } from "react-native-elements";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-LogBox.ignoreAllLogs();
-
 const HoursOfStudyScreen = ({ navigation, route }) => {
+  LogBox.ignoreLogs(["Expected style "]);
   const { assignments } = route.params;
   console.log(assignments);
   const [hours, setHours] = useState(0);
