@@ -11,11 +11,11 @@ const Stack = createStackNavigator();
 const CreationStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         options={{ headerShown: false }}
         name="CourseSelection"
         component={CourseSelectionScreen}
-      />
+      /> */}
       <Stack.Screen
         options={{ headerShown: false }}
         name="HoursOfStudy"
@@ -41,11 +41,11 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={HomeStack}
-        />
+        /> */}
         <Stack.Screen
           options={{ headerShown: false }}
           name="Creation"
