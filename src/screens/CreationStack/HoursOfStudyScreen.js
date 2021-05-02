@@ -17,6 +17,7 @@ LogBox.ignoreAllLogs();
 
 const HoursOfStudyScreen = ({ navigation, route }) => {
   const { assignments } = route.params;
+  console.log(assignments);
   const [hours, setHours] = useState(0);
   return (
     <SafeAreaView style={styles.mainContainer}>

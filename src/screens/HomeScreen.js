@@ -94,10 +94,7 @@ const HomeScreen = ({ navigation, route }) => {
   const finishedAssignments = [];
 
   const { assignments, hours } = route.params;
-  console.log("ASSIGNMENTS", assignments.length);
-  //this will store the latest due date for an assignement
-  //   const [latestDueDate, setLatestDueDate] = useState(0);
-  const [currentDay, setCurrentDay] = useState(0);
+  console.log("ASSIGNMENTS", assignments);
 
   //All assignments to do
   const [assignments1, setAssignments1] = useState();
@@ -112,6 +109,8 @@ const HomeScreen = ({ navigation, route }) => {
   const [map, setMap] = useState({});
 
   const [totalHours, setTotalHours] = useState(hours);
+
+  const [currentDay, setCurrentDay] = useState(0);
 
   // Current Date
   var currentDate = moment().format("dddd, MMMM Do");
@@ -128,6 +127,7 @@ const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log("USE EFFECT");
+    console.log(assignments);
 
     //if we need to assign the daily tasks
     if (
@@ -136,11 +136,13 @@ const HomeScreen = ({ navigation, route }) => {
       assignments &&
       assignments.length > 0
     ) {
+      console.log("ASSIGNMENTS 2", assignments);
       optimizeSchedule(assignments);
     }
-  }, []);
+  });
 
   const optimizeSchedule = (assignments) => {
+    console.log("AGAIN", assignments);
     let day = 0;
     let latest = 0;
     let finishedAssignments = [];

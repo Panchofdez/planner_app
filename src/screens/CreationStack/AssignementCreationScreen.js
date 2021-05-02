@@ -146,7 +146,7 @@ const AssignementCreationScreen = ({ navigation, route }) => {
           }}
           onPress={() => {
             if (idx === courseList.length - 1) {
-              navigation.push("HoursOfStudyScreen", {
+              navigation.push("HoursOfStudy", {
                 assignments,
               });
             } else {
