@@ -28,7 +28,8 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
         <Text
           style={{
             color: "#3A62BF",
-            fontWeight: "bold",
+            // fontWeight: "bold",
+            fontFamily: "BasisGrotesquePro_Bold",
             fontSize: 20,
             textAlign: "center",
           }}
@@ -45,6 +46,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
           style={{
             fontSize: 20,
             textAlign: "center",
+            fontFamily: "BasisGrotesquePro",
             marginBottom: 20,
           }}
         >
@@ -75,6 +77,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
       <Text
         style={{
           fontSize: 20,
+          fontFamily: "BasisGrotesquePro",
           textAlign: "center",
         }}
       >
@@ -92,7 +95,7 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
           backgroundColor: "#3A62BF",
         }}
         title="Finish"
-        titleStyle={{ fontWeight: "bold" }}
+        titleStyle={{ fontFamily: "BasisGrotesquePro_Bold" }}
       />
     </SafeAreaView>
   );

@@ -79,7 +79,14 @@ const DashboardScreen = () => {
           alignItems: "center",
         }}
       >
-        <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
+        <Text
+          style={{
+            color: "white",
+            // fontWeight: "bold",
+            fontFamily: "BasisGrotesquePro_Bold",
+            fontSize: 20,
+          }}
+        >
           {date}
         </Text>
         {/* Hours left to complete */}
@@ -111,7 +118,8 @@ const DashboardScreen = () => {
                 style={{
                   fontSize: 14,
                   color: "#4C74D0",
-                  fontWeight: "bold",
+                  // fontWeight: "bold",
+                  fontFamily: "BasisGrotesquePro_Bold",
                 }}
               >
                 0/6 Hours Completed
@@ -123,7 +131,8 @@ const DashboardScreen = () => {
               style={{
                 fontSize: 14,
                 color: "#4C74D0",
-                fontWeight: "bold",
+                // fontWeight: "bold",
+                fontFamily: "BasisGrotesquePro_Bold",
               }}
             >
               0/6 Hours Completed
@@ -204,7 +213,8 @@ const DashboardScreen = () => {
             style={{
               fontSize: 30,
               color: "white",
-              fontWeight: "bold",
+              // fontWeight: "bold",
+              fontFamily: "BasisGrotesquePro_bold",
             }}
           >
             {currentDay}
@@ -293,12 +303,33 @@ const CheckListItem = ({
         }}
       >
         <View>
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "BasisGrotesquePro_Bold",
+              color: "white",
+            }}
+          >
             {course}
           </Text>
-          <Text style={{ fontSize: 14, color: "white" }}>{assignement}</Text>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "white",
+              fontFamily: "BasisGrotesquePro",
+            }}
+          >
+            {assignement}
+          </Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+        <Text
+          style={{
+            fontSize: 16,
+            // fontWeight: "bold",
+            fontFamily: "BasisGrotesquePro",
+            color: "white",
+          }}
+        >
           {hoursOfWork}Hr(s)
         </Text>
       </View>

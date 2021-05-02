@@ -71,7 +71,11 @@ const AssignementDetails = ({ addAssignment, type }) => {
               placeholder="Name"
               textAlign="center"
               placeholderTextColor="rgba(79,116,208,0.5)"
-              inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+              inputStyle={{
+                color: "rgb(79,116,208)",
+                // fontWeight: "bold",
+                fontFamily: "BasisGrotesquePro_Bold",
+              }}
               containerStyle={{
                 height: 44,
                 marginTop: 30,
@@ -110,7 +114,11 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 placeholder="Due Date"
                 textAlign="center"
                 placeholderTextColor="rgba(79,116,208,0.5)"
-                inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                inputStyle={{
+                  color: "rgb(79,116,208)",
+                  // fontWeight: "bold",
+                  fontFamily: "BasisGrotesquePro_Bold",
+                }}
                 containerStyle={{
                   height: 44,
                   borderRadius: 25,
@@ -145,7 +153,11 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 keyboardType="number-pad"
                 inputContainerStyle={{ borderColor: "transparent" }}
                 placeholderTextColor="rgba(79,116,208,0.5)"
-                inputStyle={{ color: "rgb(79,116,208)", fontWeight: "bold" }}
+                inputStyle={{
+                  color: "rgb(79,116,208)",
+                  // fontWeight: "bold",
+                  fontFamily: "BasisGrotesquePro_Bold",
+                }}
                 containerStyle={{
                   height: 44,
                   borderRadius: 25,
@@ -189,7 +201,8 @@ const AssignementDetails = ({ addAssignment, type }) => {
             <Text
               style={{
                 color: "rgba(79,116,208,0.5)",
-                fontWeight: "bold",
+                // fontWeight: "bold",
+                fontFamily: "BasisGrotesquePro_Bold",
                 fontSize: 18,
                 marginBottom: 7,
               }}
@@ -214,7 +227,8 @@ const AssignementDetails = ({ addAssignment, type }) => {
                 <Text
                   style={{
                     color: !sad ? "rgba(79,116,208,0.5)" : "rgba(79,116,208,1)",
-                    fontWeight: "bold",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
                     fontSize: 18,
                   }}
                 >
@@ -235,7 +249,8 @@ const AssignementDetails = ({ addAssignment, type }) => {
                     color: !normal
                       ? "rgba(79,116,208,0.5)"
                       : "rgba(79,116,208,1)",
-                    fontWeight: "bold",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
                     fontSize: 18,
                   }}
                 >
@@ -256,7 +271,8 @@ const AssignementDetails = ({ addAssignment, type }) => {
                     color: !happy
                       ? "rgba(79,116,208,0.5)"
                       : "rgba(79,116,208,1)",
-                    fontWeight: "bold",
+                    // fontWeight: "bold",
+                    fontFamily: "BasisGrotesquePro_Bold",
                     fontSize: 18,
                   }}
                 >

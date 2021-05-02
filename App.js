@@ -8,6 +8,8 @@ import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
 import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
+import InfoSlidesScreen from "./src/screens/CreationStack/InfoSlidesScreen";
+import * as Font from "expo-font";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,11 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="InfoSlides"
+          component={InfoSlidesScreen}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="CourseSelection"
@@ -30,17 +37,16 @@ const MainNavigator = () => {
           name="HoursOfStudy"
           component={HoursOfStudyScreen}
         />
-
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Calendar"
           component={CalendarScreen}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Dashboard"
           component={DashboardScreen}
-        /> */}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="HomeScreen"
@@ -52,6 +58,14 @@ const MainNavigator = () => {
 };
 
 const App = () => {
-  return <MainNavigator />;
+  let [fontsLoaded] = Font.useFonts({
+    BasisGrotesquePro_Bold: require("./assets/fonts/BasisGrotesquePro-Bold.ttf"),
+    BasisGrotesquePro: require("./assets/fonts/BasisGrotesquePro-Regular.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  } else {
+    return <MainNavigator />;
+  }
 };
 export default App;
