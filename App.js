@@ -8,10 +8,14 @@ import HoursOfStudyScreen from "./src/screens/CreationStack/HoursOfStudyScreen";
 import AssignementCreationScreen from "./src/screens/CreationStack/AssignementCreationScreen";
 import DashboardScreen from "./src/screens/CreationStack/DashboardScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
+import configureStore from "./src/store";
+import { Provider } from "react-redux";
 import InfoSlidesScreen from "./src/screens/CreationStack/InfoSlidesScreen";
 import * as Font from "expo-font";
 
 const Stack = createStackNavigator();
+
+const store = configureStore();
 
 const MainNavigator = () => {
   return (
@@ -58,6 +62,11 @@ const MainNavigator = () => {
 };
 
 const App = () => {
+  return (
+    <Provider store={store}>
+      <MainNavigator />
+    </Provider>
+  );
   let [fontsLoaded] = Font.useFonts({
     BasisGrotesquePro_Bold: require("./assets/fonts/BasisGrotesquePro-Bold.ttf"),
     BasisGrotesquePro: require("./assets/fonts/BasisGrotesquePro-Regular.ttf"),

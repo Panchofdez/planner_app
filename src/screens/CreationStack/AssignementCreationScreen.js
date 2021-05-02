@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   SafeAreaView,
   View,
@@ -9,7 +10,7 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import AssignementDetails from "../../Components/AssignementDetails";
-
+import { loadAssignment } from "../../store/actions/main";
 // Icons
 import PlusSign from "../../Images/plusSign.svg";
 
@@ -17,7 +18,9 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const AssignementCreationScreen = ({ navigation, route }) => {
-  const { courseList, idx, assignments } = route.params;
+  const dispatch = useDispatch();
+  const assignments = useSelector((state) => state.assignments);
+  const { courseList, idx } = route.params;
   const [numAssignments, setNumAssignments] = useState(1);
   const [numExams, setNumExams] = useState(1);
 
@@ -27,20 +30,22 @@ const AssignementCreationScreen = ({ navigation, route }) => {
       estimatedHours,
       data["daysLeft"]
     );
-    assignments.push({
+
+    let assignmentData = {
       ...data,
       course: title,
       finished: false,
       hoursDaily: recommendedHours,
       estimatedHours,
       hoursLeft: estimatedHours,
-    });
+    };
     console.log(type);
     if (type === "Assignment") {
       setNumAssignments(numAssignments + 1);
     } else {
       setNumExams(numExams + 1);
     }
+    dispatch(loadAssignment([...assignments, assignmentData]));
   };
 
   //Estimated Hours (the hours it will take to finish assignment)= Difficulty Score*5
@@ -149,13 +154,10 @@ const AssignementCreationScreen = ({ navigation, route }) => {
           }}
           onPress={() => {
             if (idx === courseList.length - 1) {
-              navigation.push("HoursOfStudy", {
-                assignments,
-              });
+              navigation.push("HoursOfStudy");
             } else {
               console.log("INDEX", idx);
               navigation.push("AssignementCreation", {
-                assignments,
                 courseList,
                 idx: idx + 1,
               });

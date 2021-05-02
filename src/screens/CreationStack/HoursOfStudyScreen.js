@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -9,11 +10,14 @@ import {
 } from "react-native";
 import ScrollPicker from "react-native-wheel-scroll-picker";
 import { Button } from "react-native-elements";
+import { loadHours } from "../../store/actions/main";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const HoursOfStudyScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+
   LogBox.ignoreLogs(["Expected style "]);
   const { assignments } = route.params;
   console.log(assignments);
@@ -85,7 +89,8 @@ const HoursOfStudyScreen = ({ navigation, route }) => {
       </Text>
       <Button
         onPress={() => {
-          navigation.navigate("HomeScreen", { assignments, hours });
+          dispatch(loadHours(hours));
+          navigation.navigate("HomeScreen");
         }}
         buttonStyle={{
           height: 46,

@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   StyleSheet,
@@ -91,13 +92,35 @@ let allAssignments = [
 ];
 
 const HomeScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const assignments = useSelector((state) => state.assignments);
+  const hours = useSelector((state) => state.totalHours);
   const finishedAssignments = [];
 
-  const { assignments, hours } = route.params;
-  console.log("ASSIGNMENTS", assignments);
+  console.log(assignments);
 
   //All assignments to do
   const [assignments1, setAssignments1] = useState();
+  let initialRender = true;
+  useEffect(() => {
+    if (initialRender) {
+      initialRender = false;
+    } else {
+      console.log("USE EFFECT");
+      console.log(assignments);
+
+      //if we need to assign the daily tasks
+      if (
+        dailyAssignments &&
+        dailyAssignments.length === 0 &&
+        assignments &&
+        assignments.length > 0
+      ) {
+        console.log("ASSIGNMENTS 2", assignments);
+        optimizeSchedule(assignments);
+      }
+    }
+  }, [assignments, dailyAssignments]);
 
   //Assignments that are finished
   // const [finishedAssignments, setFinishedAssignments] = useState([]);
@@ -124,22 +147,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [date, setDate] = useState(currentDate);
 
   console.log(`${percentComplete}%`);
-
-  useEffect(() => {
-    console.log("USE EFFECT");
-    console.log(assignments);
-
-    //if we need to assign the daily tasks
-    if (
-      dailyAssignments &&
-      dailyAssignments.length === 0 &&
-      assignments &&
-      assignments.length > 0
-    ) {
-      console.log("ASSIGNMENTS 2", assignments);
-      optimizeSchedule(assignments);
-    }
-  });
 
   const optimizeSchedule = (assignments) => {
     console.log("AGAIN", assignments);

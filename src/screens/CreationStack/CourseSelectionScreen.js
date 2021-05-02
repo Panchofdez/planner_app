@@ -248,7 +248,6 @@ const CreationScreen = ({ navigation }) => {
               navigation.push("AssignementCreation", {
                 courseList: data,
                 idx: 0,
-                assignments: [],
               });
             }}
             buttonStyle={{
