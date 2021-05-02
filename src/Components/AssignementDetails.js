@@ -22,7 +22,6 @@ const AssignementDetails = ({ addAssignment, type }) => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [weight, setWeight] = useState("");
-  const [difficulty, setDifficulty] = useState("");
   const [showButton, setShowButton] = useState(true);
   const [isEditable, setIsEditable] = useState(true);
 
@@ -290,11 +289,18 @@ const AssignementDetails = ({ addAssignment, type }) => {
           onPress={() => {
             let date = moment(new Date(dueDate));
             let now = moment(new Date());
-
             let days = date.diff(now, "days");
+            let difficulty;
+            if (sad) {
+              difficulty = 3;
+            } else if (normal) {
+              difficulty = 2;
+            } else {
+              difficulty = 1;
+            }
             let data = {
               name: description,
-              difficulty: 2,
+              difficulty,
               weight,
               dueDate,
               daysLeft: days,
